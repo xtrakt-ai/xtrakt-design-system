@@ -1,0 +1,228 @@
+/* ============================================================================
+ * xTrakt — Design Tokens (Stripe-style "Technical authority")
+ *
+ * White background, hairline borders, typed shadows, indigo brand.
+ * Coexists with the old --neu-* tokens in styles.scss — any screen
+ * that opts into the redesign uses these instead.
+ * ========================================================================= */
+
+:root {
+  /* Surfaces */
+  --xt-bg:            #ffffff;
+  --xt-surface:       #f6f9fc;
+  --xt-surface-muted: #eef2f7;
+
+  /* Borders */
+  --xt-border:        #e3e8ee;
+  --xt-border-strong: #c1c9d2;
+
+  /* Foreground */
+  --xt-fg:            #0a2540;   /* indigo-black — primary text */
+  --xt-fg-muted:      #425466;   /* labels, captions */
+  --xt-fg-subtle:     #8792a2;   /* placeholders, disabled */
+  --xt-fg-inverse:    #ffffff;
+
+  /* Brand */
+  --xt-brand:         #635bff;
+  --xt-brand-hover:   #554bff;
+  --xt-brand-soft:    #efeeff;   /* selected state bg */
+
+  /* Accent (illustration / charts only — never chrome) */
+  --xt-accent:        #00d4ff;
+  --xt-brand-gradient: linear-gradient(135deg, #635bff 0%, #00d4ff 100%);
+
+  /* Semantic */
+  --xt-success:        #0e7c3a;
+  --xt-success-soft:   rgba(14, 124, 58, .10);
+  --xt-warning:        #c27803;
+  --xt-warning-soft:   rgba(194, 120, 3, .10);
+  --xt-danger:         #cd3d64;
+  --xt-danger-soft:    rgba(205, 61, 100, .10);
+  --xt-info:           #2563eb;
+  --xt-info-soft:      rgba(37, 99, 235, .10);
+
+  /* Radius */
+  --xt-r-ctrl:  4px;   /* buttons, inputs */
+  --xt-r-card:  8px;   /* cards, panels */
+  --xt-r-modal: 12px;  /* modals, drawers */
+  --xt-r-pill:  999px;
+
+  /* Sizing */
+  --xt-ctrl-h: 38px;
+  --xt-ctrl-h-sm: 30px;
+  --xt-ctrl-h-lg: 44px;
+
+  /* Spacing (scale — use multiples of 4) */
+  --xt-sp-1:  4px;
+  --xt-sp-2:  8px;
+  --xt-sp-3:  12px;
+  --xt-sp-4:  16px;
+  --xt-sp-5:  20px;
+  --xt-sp-6:  24px;
+  --xt-sp-8:  32px;
+  --xt-sp-10: 40px;
+
+  /* Shadows */
+  --xt-shadow-sm: 0 2px 5px rgba(50, 50, 93, .08), 0 1px 2px rgba(0, 0, 0, .04);
+  --xt-shadow-md: 0 6px 18px rgba(50, 50, 93, .10), 0 2px 4px rgba(0, 0, 0, .05);
+  --xt-shadow-lg: 0 16px 40px rgba(50, 50, 93, .12), 0 4px 10px rgba(0, 0, 0, .06);
+
+  /* Focus ring */
+  --xt-focus-ring: 0 0 0 3px rgba(99, 91, 255, .20);
+
+  /* Typography */
+  --xt-font:       'Inter', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --xt-font-mono:  'SF Mono', Menlo, Consolas, 'Courier New', monospace;
+
+  /* Motion */
+  --xt-ease:       cubic-bezier(.2, .8, .2, 1);
+  --xt-dur-fast:   150ms;
+  --xt-dur-base:   200ms;
+}
+
+/* ----------------------------------------------------------------------------
+ * Component primitives — scoped under .xt-redesign so we can opt in per route
+ * ------------------------------------------------------------------------- */
+
+.xt-redesign {
+  font-family: var(--xt-font);
+  color: var(--xt-fg);
+  background: var(--xt-bg);
+}
+
+.xt-redesign :is(h1, h2, h3, h4, h5) {
+  color: var(--xt-fg); letter-spacing: -.01em; font-weight: 600;
+}
+
+/* Buttons */
+.xt-redesign .xt-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--xt-sp-2);
+  height: var(--xt-ctrl-h); padding: 0 var(--xt-sp-4);
+  border-radius: var(--xt-r-ctrl); border: 1px solid transparent;
+  background: transparent; color: inherit;
+  font: 500 14px/1 var(--xt-font); cursor: pointer;
+  transition: background var(--xt-dur-fast) var(--xt-ease),
+              box-shadow var(--xt-dur-fast) var(--xt-ease),
+              border-color var(--xt-dur-fast) var(--xt-ease);
+  white-space: nowrap;
+}
+.xt-redesign .xt-btn:focus-visible { outline: none; box-shadow: var(--xt-focus-ring); }
+
+.xt-redesign .xt-btn--primary {
+  background: var(--xt-brand); color: var(--xt-fg-inverse);
+  box-shadow: 0 1px 3px rgba(50, 50, 93, .15), 0 1px 0 rgba(0, 0, 0, .08);
+}
+.xt-redesign .xt-btn--primary:hover { background: var(--xt-brand-hover); }
+
+.xt-redesign .xt-btn--secondary {
+  background: var(--xt-bg); color: var(--xt-fg);
+  border-color: var(--xt-border-strong);
+}
+.xt-redesign .xt-btn--secondary:hover { background: var(--xt-surface); }
+
+.xt-redesign .xt-btn--ghost { color: var(--xt-fg-muted); }
+.xt-redesign .xt-btn--ghost:hover { background: var(--xt-surface); color: var(--xt-fg); }
+
+.xt-redesign .xt-btn--danger { background: var(--xt-danger); color: var(--xt-fg-inverse); }
+.xt-redesign .xt-btn--danger:hover { background: #b62f55; }
+
+.xt-redesign .xt-btn--icon { width: var(--xt-ctrl-h); padding: 0; }
+.xt-redesign .xt-btn--sm   { height: var(--xt-ctrl-h-sm); padding: 0 var(--xt-sp-3); font-size: 13px; }
+.xt-redesign .xt-btn--lg   { height: var(--xt-ctrl-h-lg); padding: 0 var(--xt-sp-5); font-size: 15px; }
+
+.xt-redesign .xt-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Inputs */
+.xt-redesign .xt-input {
+  height: var(--xt-ctrl-h); width: 100%;
+  padding: 0 var(--xt-sp-3);
+  background: var(--xt-bg); color: var(--xt-fg);
+  border: 1px solid var(--xt-border); border-radius: var(--xt-r-ctrl);
+  font: 14px var(--xt-font);
+  transition: border-color var(--xt-dur-fast) var(--xt-ease),
+              box-shadow var(--xt-dur-fast) var(--xt-ease);
+}
+.xt-redesign .xt-input:focus { outline: none; border-color: var(--xt-brand); box-shadow: var(--xt-focus-ring); }
+.xt-redesign .xt-input::placeholder { color: var(--xt-fg-subtle); }
+.xt-redesign textarea.xt-input { height: auto; padding: var(--xt-sp-2) var(--xt-sp-3); resize: vertical; min-height: 80px; }
+
+/* Card */
+.xt-redesign .xt-card {
+  background: var(--xt-bg); border: 1px solid var(--xt-border);
+  border-radius: var(--xt-r-card); padding: var(--xt-sp-5);
+  box-shadow: var(--xt-shadow-sm);
+}
+.xt-redesign .xt-card--flat { box-shadow: none; }
+
+/* Tile — interactive card */
+.xt-redesign .xt-tile {
+  background: var(--xt-bg);
+  border: 1px solid var(--xt-border);
+  border-radius: var(--xt-r-card);
+  padding: var(--xt-sp-5);
+  box-shadow: var(--xt-shadow-sm);
+  cursor: pointer;
+  transition: transform var(--xt-dur-base) var(--xt-ease),
+              box-shadow var(--xt-dur-base) var(--xt-ease),
+              border-color var(--xt-dur-fast) var(--xt-ease);
+}
+.xt-redesign .xt-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--xt-shadow-md);
+  border-color: var(--xt-border-strong);
+}
+.xt-redesign .xt-tile--active { border-color: var(--xt-brand); box-shadow: 0 0 0 1px var(--xt-brand); }
+
+/* Badge / Status pill */
+.xt-redesign .xt-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: var(--xt-r-pill);
+  font: 500 11px/1.6 var(--xt-font); letter-spacing: .02em;
+}
+.xt-redesign .xt-badge--success { background: var(--xt-success-soft); color: var(--xt-success); }
+.xt-redesign .xt-badge--warning { background: var(--xt-warning-soft); color: var(--xt-warning); }
+.xt-redesign .xt-badge--danger  { background: var(--xt-danger-soft);  color: var(--xt-danger); }
+.xt-redesign .xt-badge--info    { background: var(--xt-info-soft);    color: var(--xt-info); }
+.xt-redesign .xt-badge--muted   { background: var(--xt-surface); color: var(--xt-fg-muted); border: 1px solid var(--xt-border); }
+
+/* Table */
+.xt-redesign .xt-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.xt-redesign .xt-table th,
+.xt-redesign .xt-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--xt-border); }
+.xt-redesign .xt-table th {
+  font: 600 11px/1.5 var(--xt-font); color: var(--xt-fg);
+  letter-spacing: .06em; text-transform: uppercase;
+  background: var(--xt-surface); border-bottom: 1px solid var(--xt-border);
+}
+.xt-redesign .xt-table tbody tr:hover { background: var(--xt-surface); }
+
+/* Hero with brand gradient */
+.xt-redesign .xt-hero {
+  background: var(--xt-brand-gradient);
+  color: var(--xt-fg-inverse);
+  border-radius: var(--xt-r-card);
+  padding: var(--xt-sp-6);
+  box-shadow: var(--xt-shadow-md);
+}
+.xt-redesign .xt-hero h3 { color: var(--xt-fg-inverse); font-size: 18px; margin-bottom: 4px; }
+.xt-redesign .xt-hero p  { opacity: .9; font-size: 14px; }
+
+/* Icon container inside tile */
+.xt-redesign .xt-icon-box {
+  width: 40px; height: 40px; border-radius: 6px;
+  background: var(--xt-brand-soft); color: var(--xt-brand);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Section header above cards */
+.xt-redesign .xt-section-label {
+  font: 500 11px/1.5 var(--xt-font);
+  color: var(--xt-fg-muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* Divider */
+.xt-redesign .xt-divider { height: 1px; background: var(--xt-border); margin: var(--xt-sp-4) 0; }

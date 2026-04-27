@@ -1,0 +1,64 @@
+name: Publish package
+
+on:
+  push:
+    tags:
+      - 'vdesign-tokens@*'
+      - 'vui-vue@*'
+      - 'vui-angular@*'
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Which package to publish'
+        required: true
+        type: choice
+        options: [design-tokens, ui-vue, ui-angular]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@xtrakt-ai'
+
+      - name: Resolve target package
+        id: target
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          MANUAL_PKG: ${{ inputs.package }}
+        run: |
+          if [ -n "$MANUAL_PKG" ]; then
+            pkg="$MANUAL_PKG"
+          else
+            pkg=$(printf '%s' "$REF_NAME" | sed -e 's/^v//' -e 's/@.*$//')
+          fi
+          case "$pkg" in
+            design-tokens|ui-vue|ui-angular) ;;
+            *) echo "::error::unrecognized package '$pkg'"; exit 1 ;;
+          esac
+          echo "pkg=$pkg" >> "$GITHUB_OUTPUT"
+
+      - name: Install (workspaces)
+        run: npm ci
+
+      - name: Build target
+        if: steps.target.outputs.pkg != 'design-tokens'
+        env:
+          PKG: ${{ steps.target.outputs.pkg }}
+        run: npm run build -w "@xtrakt-ai/$PKG"
+
+      - name: Publish target
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG: ${{ steps.target.outputs.pkg }}
+        run: npm publish -w "@xtrakt-ai/$PKG"

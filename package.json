@@ -1,0 +1,17 @@
+{
+  "name": "xtrakt-design-system",
+  "version": "0.0.0",
+  "private": true,
+  "description": "xtrakt unified design tokens + UI primitives. Source of truth replacing the per-FE mirrors.",
+  "workspaces": [
+    "packages/design-tokens",
+    "packages/ui-vue",
+    "packages/ui-angular"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "publish:tokens": "npm publish -w @xtrakt-ai/design-tokens",
+    "publish:vue": "npm publish -w @xtrakt-ai/ui-vue",
+    "publish:angular": "npm publish -w @xtrakt-ai/ui-angular"
+  }
+}

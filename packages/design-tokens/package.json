@@ -1,0 +1,33 @@
+{
+  "name": "@xtrakt-ai/design-tokens",
+  "version": "1.0.0",
+  "description": "xtrakt canonical CSS design tokens (Stripe-style). Single source of truth for every FE.",
+  "license": "UNLICENSED",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "files": [
+    "src/tokens.css",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "default": "./src/tokens.css"
+    },
+    "./tokens.css": "./src/tokens.css"
+  },
+  "main": "src/tokens.css",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xtrakt-ai/xtrakt-design-system.git",
+    "directory": "packages/design-tokens"
+  },
+  "keywords": [
+    "xtrakt",
+    "design-tokens",
+    "css-variables",
+    "stripe-style"
+  ]
+}

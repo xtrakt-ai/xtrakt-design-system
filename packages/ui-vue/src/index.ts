@@ -1,0 +1,5 @@
+export { default as XBreadcrumb } from './components/XBreadcrumb.vue'
+export { default as XButton } from './components/XButton.vue'
+export { default as XInput } from './components/XInput.vue'
+export { default as XCard } from './components/XCard.vue'
+export { default as XBadge } from './components/XBadge.vue'

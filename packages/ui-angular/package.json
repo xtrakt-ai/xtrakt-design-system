@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/ui-angular",
-  "version": "1.0.0",
-  "description": "xtrakt UI primitives for Angular — XBreadcrumbComponent, XButtonDirective, XCardComponent.",
+  "version": "1.0.1",
+  "description": "xtrakt UI primitives for Angular — XBreadcrumbComponent (standalone). Ships source TypeScript; consumers compile as part of their app.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {
@@ -9,42 +9,26 @@
     "access": "restricted"
   },
   "files": [
-    "fesm2022",
-    "esm2022",
-    "lib",
-    "*.d.ts",
+    "projects",
     "package.json",
     "README.md"
   ],
-  "module": "fesm2022/xtrakt-ai-ui-angular.mjs",
-  "es2022": "fesm2022/xtrakt-ai-ui-angular.mjs",
-  "esm2022": "esm2022/xtrakt-ai-ui-angular.mjs",
-  "typings": "lib/public-api.d.ts",
+  "main": "projects/lib/src/public-api.ts",
+  "types": "projects/lib/src/public-api.ts",
   "exports": {
     ".": {
-      "types": "./lib/public-api.d.ts",
-      "esm2022": "./esm2022/xtrakt-ai-ui-angular.mjs",
-      "es2022": "./fesm2022/xtrakt-ai-ui-angular.mjs",
-      "default": "./fesm2022/xtrakt-ai-ui-angular.mjs"
+      "types": "./projects/lib/src/public-api.ts",
+      "default": "./projects/lib/src/public-api.ts"
     }
   },
   "scripts": {
-    "build": "ng-packagr -p ng-package.json"
+    "build": "echo 'ui-angular ships source — no build step'"
   },
   "peerDependencies": {
     "@angular/common": "^21.0.0",
     "@angular/core": "^21.0.0",
     "@angular/router": "^21.0.0",
     "@xtrakt-ai/design-tokens": "^1.0.0"
-  },
-  "devDependencies": {
-    "@angular/common": "^21.2.0",
-    "@angular/compiler": "^21.2.0",
-    "@angular/compiler-cli": "^21.2.0",
-    "@angular/core": "^21.2.0",
-    "@angular/router": "^21.2.0",
-    "ng-packagr": "^21.2.0",
-    "typescript": "^5.4.0"
   },
   "repository": {
     "type": "git",

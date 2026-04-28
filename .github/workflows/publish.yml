@@ -48,8 +48,11 @@ jobs:
           esac
           echo "pkg=$pkg" >> "$GITHUB_OUTPUT"
 
+      # design-tokens ships only a CSS file — skip install + build for it.
+      # ui-vue / ui-angular need their dev deps to run vite/ng-packagr.
       - name: Install (workspaces)
-        run: npm ci
+        if: steps.target.outputs.pkg != 'design-tokens'
+        run: npm install --no-audit --no-fund
 
       - name: Build target
         if: steps.target.outputs.pkg != 'design-tokens'

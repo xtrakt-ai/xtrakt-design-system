@@ -13,11 +13,12 @@ export default defineConfig({
     },
     rollupOptions: {
       // Don't bundle peer deps; consumers already have them.
-      external: ['vue', 'vue-router'],
+      external: ['vue', 'vue-router', 'vue-toastification'],
       output: {
         globals: {
           vue: 'Vue',
           'vue-router': 'VueRouter',
+          'vue-toastification': 'VueToastification',
         },
       },
     },

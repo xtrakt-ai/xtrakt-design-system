@@ -6,7 +6,10 @@ export { default as XCard } from './components/XCard.vue'
 export { default as XBadge } from './components/XBadge.vue'
 export { default as XSkeleton } from './components/XSkeleton.vue'
 export { default as XCopyUrlButton } from './components/XCopyUrlButton.vue'
+export { default as XBulkActionBar } from './components/XBulkActionBar.vue'
 
 // Composables
 export { useNotifications } from './composables/useNotifications'
 export { useExportCsv, type CsvColumn, type ExportCsvOptions } from './composables/useExportCsv'
+export { useOptimistic, type OptimisticOptions } from './composables/useOptimistic'
+export { useSelection } from './composables/useSelection'

@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/ui-vue",
-  "version": "1.1.0",
-  "description": "xtrakt UI primitives for Vue 3 — XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, useNotifications, useExportCsv.",
+  "version": "1.2.0",
+  "description": "xtrakt UI primitives for Vue 3 — XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, useNotifications, useExportCsv, useOptimistic, useSelection.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {

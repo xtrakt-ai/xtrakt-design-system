@@ -20,13 +20,12 @@ const props = withDefaults(defineProps<{
 
 const items = Array.from({ length: Math.max(1, props.count) }, (_, i) => i)
 
-function styleFor(variant: Variant) {
-  const base = {
-    '--w': props.width ?? '',
-    '--h': props.height ?? '',
-  } as Record<string, string>
-  return base
-}
+// Width/height overrides come through CSS custom properties so the per-variant
+// defaults in <style> still apply when only one dimension is overridden.
+const styleVars = {
+  '--w': props.width ?? '',
+  '--h': props.height ?? '',
+} as Record<string, string>
 </script>
 
 <template>
@@ -34,7 +33,7 @@ function styleFor(variant: Variant) {
     v-for="i in items"
     :key="i"
     :class="['xt-skeleton', `xt-skeleton--${variant}`, { 'xt-skeleton--paused': paused }]"
-    :style="styleFor(variant)"
+    :style="styleVars"
     aria-hidden="true"
   />
 </template>

@@ -1,4 +1,17 @@
-import { useToast, POSITION, type ToastOptions } from 'vue-toastification'
+import { useToast, POSITION } from 'vue-toastification'
+
+// vue-toastification doesn't re-export ToastOptions cleanly across minor
+// versions; pin the runtime-only fields we actually use here so this file
+// stays buildable regardless of which 2.x line the consumer pins.
+type ToastOptions = {
+  position?: typeof POSITION[keyof typeof POSITION]
+  timeout?: number | false
+  pauseOnFocusLoss?: boolean
+  pauseOnHover?: boolean
+  draggable?: boolean
+  closeButton?: 'button' | false
+  onClick?: (closeToast: () => void) => void
+} & Record<string, unknown>
 
 /**
  * Standardized toast wrapper used across xtrakt FEs. Wraps vue-toastification

@@ -14,3 +14,8 @@ export { useExportCsv, type CsvColumn, type ExportCsvOptions } from './composabl
 export { useOptimistic, type OptimisticOptions } from './composables/useOptimistic'
 export { useSelection } from './composables/useSelection'
 export { useCan, type AuthResolver, type UseCanOptions } from './composables/useCan'
+export {
+  useGlobalShortcuts,
+  type ShortcutBindings,
+  type UseGlobalShortcutsOptions,
+} from './composables/useGlobalShortcuts'

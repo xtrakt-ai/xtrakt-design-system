@@ -1,17 +1,10 @@
 import { useToast, POSITION } from 'vue-toastification'
 
-// vue-toastification doesn't re-export ToastOptions cleanly across minor
-// versions; pin the runtime-only fields we actually use here so this file
-// stays buildable regardless of which 2.x line the consumer pins.
-type ToastOptions = {
-  position?: typeof POSITION[keyof typeof POSITION]
-  timeout?: number | false
-  pauseOnFocusLoss?: boolean
-  pauseOnHover?: boolean
-  draggable?: boolean
-  closeButton?: 'button' | false
-  onClick?: (closeToast: () => void) => void
-} & Record<string, unknown>
+// Loosely-typed alias for the toast options bag — vue-toastification's own
+// ToastOptions uses bare Function for callbacks and isn't re-exported cleanly
+// across its 2.x line. Consumers pass plain object literals; downstream
+// validation is the lib's responsibility.
+type ToastOpts = Record<string, unknown>
 
 /**
  * Standardized toast wrapper used across xtrakt FEs. Wraps vue-toastification
@@ -33,7 +26,7 @@ type ToastOptions = {
 export function useNotifications() {
   const toast = useToast()
 
-  const baseOpts: Partial<ToastOptions> = {
+  const baseOpts: ToastOpts = {
     position: POSITION.TOP_RIGHT,
     pauseOnFocusLoss: true,
     pauseOnHover: true,
@@ -41,36 +34,33 @@ export function useNotifications() {
     closeButton: 'button',
   }
 
-  function success(message: string, opts: Partial<ToastOptions> = {}) {
-    toast.success(message, { ...baseOpts, timeout: 5000, ...opts })
+  function success(message: string, opts: ToastOpts = {}) {
+    toast.success(message, { ...baseOpts, timeout: 5000, ...opts } as never)
   }
 
-  function info(message: string, opts: Partial<ToastOptions> = {}) {
-    toast.info(message, { ...baseOpts, timeout: 4000, ...opts })
+  function info(message: string, opts: ToastOpts = {}) {
+    toast.info(message, { ...baseOpts, timeout: 4000, ...opts } as never)
   }
 
-  function warning(message: string, opts: Partial<ToastOptions> = {}) {
-    toast.warning(message, { ...baseOpts, timeout: 6000, ...opts })
+  function warning(message: string, opts: ToastOpts = {}) {
+    toast.warning(message, { ...baseOpts, timeout: 6000, ...opts } as never)
   }
 
   /**
    * Errors stay open until the user dismisses them. Pass `retry` to render a
-   * Retry button that re-runs the failed mutation; the toast closes after the
-   * retry handler resolves (or stays for another round if it throws).
+   * click-to-retry toast that re-runs the failed mutation. If retry throws or
+   * rejects, the toast re-emits with "(retry failed)".
    */
   function error(
     message: string,
-    opts: Partial<ToastOptions> & { retry?: () => Promise<void> | void } = {},
+    opts: ToastOpts & { retry?: () => Promise<void> | void } = {},
   ) {
     const { retry, ...rest } = opts
     if (!retry) {
-      toast.error(message, { ...baseOpts, timeout: false, ...rest })
+      toast.error(message, { ...baseOpts, timeout: false, ...rest } as never)
       return
     }
 
-    // Render with an action: vue-toastification supports custom content via
-    // the `content` option, but to avoid a JSX dependency at the lib level we
-    // append " (Click to retry)" and bind onClick to the retry handler.
     toast.error(`${message} — click to retry`, {
       ...baseOpts,
       timeout: false,
@@ -80,7 +70,6 @@ export function useNotifications() {
           const result = retry()
           if (result && typeof (result as Promise<void>).then === 'function') {
             ;(result as Promise<void>).catch(() => {
-              // Re-render the toast so the user sees the retry failed.
               error(`${message} (retry failed)`, opts)
             })
           }
@@ -88,7 +77,7 @@ export function useNotifications() {
           error(`${message} (retry failed)`, opts)
         }
       },
-    })
+    } as never)
   }
 
   return { success, info, warning, error }

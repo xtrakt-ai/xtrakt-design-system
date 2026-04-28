@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { shallowRef, computed } from 'vue'
 
 /**
  * Reactive multi-select helper for list views. Caller passes a `keyFn` that
@@ -22,7 +22,10 @@ import { ref, computed } from 'vue'
  *   </XBulkActionBar>
  */
 export function useSelection<T, K = string | number>(keyFn: (item: T) => K) {
-  const selectedKeys = ref<Set<K>>(new Set())
+  // shallowRef to avoid Vue's deep unwrap mangling K through UnwrapRefSimple.
+  // We replace the Set whole on every change anyway, so deep reactivity is
+  // unnecessary and would break the K typing.
+  const selectedKeys = shallowRef<Set<K>>(new Set<K>())
 
   function isSelected(item: T): boolean {
     return selectedKeys.value.has(keyFn(item))

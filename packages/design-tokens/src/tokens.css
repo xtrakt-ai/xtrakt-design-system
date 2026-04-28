@@ -78,6 +78,55 @@
   --xt-ease:       cubic-bezier(.2, .8, .2, 1);
   --xt-dur-fast:   150ms;
   --xt-dur-base:   200ms;
+
+  /* Canonical cross-frontend aliases.
+   * New screens should prefer these names; --xt-* remains supported as the
+   * underlying implementation layer and legacy apps can migrate gradually. */
+  --color-primary:          var(--xt-brand);
+  --color-primary-hover:    var(--xt-brand-hover);
+  --color-primary-soft:     var(--xt-brand-soft);
+  --color-accent:           var(--xt-accent);
+  --color-success:          var(--xt-success);
+  --color-success-soft:     var(--xt-success-soft);
+  --color-warning:          var(--xt-warning);
+  --color-warning-soft:     var(--xt-warning-soft);
+  --color-danger:           var(--xt-danger);
+  --color-danger-soft:      var(--xt-danger-soft);
+  --color-info:             var(--xt-info);
+  --color-info-soft:        var(--xt-info-soft);
+
+  --surface-page:           var(--xt-surface);
+  --surface-card:           var(--xt-bg);
+  --surface-muted:          var(--xt-surface-muted);
+  --surface-selected:       var(--xt-brand-soft);
+
+  --border-subtle:          var(--xt-border);
+  --border-strong:          var(--xt-border-strong);
+
+  --text-primary:           var(--xt-fg);
+  --text-muted:             var(--xt-fg-muted);
+  --text-subtle:            var(--xt-fg-subtle);
+  --text-inverse:           var(--xt-fg-inverse);
+
+  --radius-sm:              var(--xt-r-ctrl);
+  --radius-md:              var(--xt-r-card);
+  --radius-lg:              var(--xt-r-modal);
+  --radius-pill:            var(--xt-r-pill);
+
+  --shadow-card:            var(--xt-shadow-sm);
+  --shadow-card-hover:      var(--xt-shadow-md);
+  --shadow-elevated:        var(--xt-shadow-lg);
+  --focus-ring:             var(--xt-focus-ring);
+
+  --font-sans:              var(--xt-font);
+  --font-mono:              var(--xt-font-mono);
+
+  /* Legacy compatibility aliases observed across apps. Keep these thin and
+   * boring so old variable names do not become competing design systems. */
+  --brand-primary:          var(--color-primary);
+  --brand-accent:           var(--color-accent);
+  --xt-primary:             var(--color-primary);
+  --accent:                 var(--color-primary);
 }
 
 /* ----------------------------------------------------------------------------

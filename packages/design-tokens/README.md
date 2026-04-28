@@ -1,5 +1,24 @@
 # @xtrakt-ai/design-tokens
 
+Canonical CSS design tokens for xTrakt frontends.
+
+## Preferred Tokens
+
+New screens should use the canonical names below instead of creating local
+aliases such as `--neu-accent`, `--xt-primary`, `--brand-primary`, or
+`--accent`.
+
+- `--color-primary`, `--color-primary-hover`, `--color-primary-soft`
+- `--surface-page`, `--surface-card`, `--surface-muted`, `--surface-selected`
+- `--text-primary`, `--text-muted`, `--text-subtle`, `--text-inverse`
+- `--radius-sm`, `--radius-md`, `--radius-lg`, `--radius-pill`
+- `--shadow-card`, `--shadow-card-hover`, `--shadow-elevated`
+- `--border-subtle`, `--border-strong`, `--focus-ring`
+
+The older `--xt-*` variables remain the implementation layer. Legacy aliases
+are intentionally mapped to the canonical tokens so apps can migrate without a
+large visual rewrite.
+
 Canonical CSS design tokens for xtrakt. Stripe-style "technical authority" —
 white surfaces, hairline borders, indigo brand `#635bff`, flat shadows.
 

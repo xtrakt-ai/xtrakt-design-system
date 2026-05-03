@@ -1,6 +1,6 @@
 {
   "name": "@xtrakt-ai/ui-angular",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "xtrakt UI primitives for Angular — XBreadcrumbComponent, XShellComponent (app-shell sidebar+topbar). Standalone, ships source TypeScript; consumers compile as part of their app.",
   "license": "UNLICENSED",
   "private": false,

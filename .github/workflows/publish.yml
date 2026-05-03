@@ -1,7 +1,25 @@
 name: Publish package
 
+# Three triggers, smallest blast radius first:
+#
+#   1. Push to main with changes under a package's directory — auto-detects
+#      which package changed, reads its current version from package.json,
+#      and publishes only if that exact version isn't already on GH Packages.
+#      No-op for README-only or version-already-published commits.
+#
+#   2. Push of a `v<pkg>@<version>` tag — the explicit-ceremony release path
+#      (e.g. `git tag vui-vue@1.5.0 && git push --tags`). Always publishes.
+#
+#   3. workflow_dispatch — manual run from the Actions tab, pick which
+#      package to publish.
 on:
   push:
+    branches:
+      - main
+    paths:
+      - 'packages/ui-vue/**'
+      - 'packages/ui-angular/**'
+      - 'packages/design-tokens/**'
     tags:
       - 'vdesign-tokens@*'
       - 'vui-vue@*'
@@ -19,8 +37,71 @@ permissions:
   packages: write
 
 jobs:
-  publish:
+  detect:
     runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.targets.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # We need at least the previous commit so the diff-against-parent
+          # path filter actually has something to compare against on push.
+          fetch-depth: 2
+
+      - name: Resolve target packages
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          MANUAL_PKG: ${{ inputs.package }}
+        run: |
+          set -e
+          targets=()
+
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            targets=("$MANUAL_PKG")
+          elif [ "$EVENT_NAME" = "push" ] && [ "${REF_NAME#v}" != "$REF_NAME" ]; then
+            # tag push: vui-vue@1.5.0 -> ui-vue
+            pkg=$(printf '%s' "$REF_NAME" | sed -e 's/^v//' -e 's/@.*$//')
+            targets=("$pkg")
+          else
+            # branch push: detect packages with changed files
+            changed=$(git diff --name-only HEAD^ HEAD || true)
+            for pkg in design-tokens ui-vue ui-angular; do
+              if printf '%s\n' "$changed" | grep -q "^packages/$pkg/"; then
+                targets+=("$pkg")
+              fi
+            done
+          fi
+
+          if [ ${#targets[@]} -eq 0 ]; then
+            echo "::notice::no changed packages — nothing to publish"
+            echo 'packages=[]' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Validate
+          for pkg in "${targets[@]}"; do
+            case "$pkg" in
+              design-tokens|ui-vue|ui-angular) ;;
+              *) echo "::error::unrecognized package '$pkg'"; exit 1 ;;
+            esac
+          done
+
+          # Build a JSON array for the matrix — printf isn't enough because
+          # we need real JSON, so use jq.
+          json=$(printf '%s\n' "${targets[@]}" | jq -R . | jq -s -c .)
+          echo "packages=$json" >> "$GITHUB_OUTPUT"
+          echo "::notice::will publish: ${targets[*]}"
+
+  publish:
+    needs: detect
+    if: needs.detect.outputs.packages != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.detect.outputs.packages) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,37 +112,38 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@xtrakt-ai'
 
-      - name: Resolve target package
-        id: target
-        env:
-          REF_NAME: ${{ github.ref_name }}
-          MANUAL_PKG: ${{ inputs.package }}
-        run: |
-          if [ -n "$MANUAL_PKG" ]; then
-            pkg="$MANUAL_PKG"
-          else
-            pkg=$(printf '%s' "$REF_NAME" | sed -e 's/^v//' -e 's/@.*$//')
-          fi
-          case "$pkg" in
-            design-tokens|ui-vue|ui-angular) ;;
-            *) echo "::error::unrecognized package '$pkg'"; exit 1 ;;
-          esac
-          echo "pkg=$pkg" >> "$GITHUB_OUTPUT"
-
       # design-tokens ships only a CSS file — skip install + build for it.
-      # ui-vue / ui-angular need their dev deps to run vite/ng-packagr.
+      # ui-vue / ui-angular need their dev deps to run vite/vue-tsc.
       - name: Install (workspaces)
-        if: steps.target.outputs.pkg != 'design-tokens'
+        if: matrix.package != 'design-tokens'
         run: npm install --no-audit --no-fund
 
       - name: Build target
-        if: steps.target.outputs.pkg != 'design-tokens'
+        if: matrix.package != 'design-tokens'
         env:
-          PKG: ${{ steps.target.outputs.pkg }}
+          PKG: ${{ matrix.package }}
         run: npm run build -w "@xtrakt-ai/$PKG"
 
-      - name: Publish target
+      - name: Skip if version already published
+        id: gate
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PKG: ${{ steps.target.outputs.pkg }}
+          PKG: ${{ matrix.package }}
+        run: |
+          set -e
+          version=$(node -p "require('./packages/$PKG/package.json').version")
+          name="@xtrakt-ai/$PKG"
+          echo "Checking if $name@$version is already published..."
+          if npm view "$name@$version" version --registry=https://npm.pkg.github.com > /dev/null 2>&1; then
+            echo "::notice::$name@$version is already on GH Packages — skipping publish"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish target
+        if: steps.gate.outputs.skip != 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG: ${{ matrix.package }}
         run: npm publish -w "@xtrakt-ai/$PKG"

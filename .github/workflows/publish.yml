@@ -114,8 +114,13 @@ jobs:
 
       # design-tokens ships only a CSS file — skip install + build for it.
       # ui-vue / ui-angular need their dev deps to run vite/vue-tsc.
+      # NODE_AUTH_TOKEN is required even on install: the workspace pulls
+      # @xtrakt-ai/design-tokens from GH Packages as a peer-dep, and the
+      # registry needs auth even for read access on private packages.
       - name: Install (workspaces)
         if: matrix.package != 'design-tokens'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm install --no-audit --no-fund
 
       - name: Build target

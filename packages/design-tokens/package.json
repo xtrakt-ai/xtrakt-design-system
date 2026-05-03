@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/design-tokens",
-  "version": "1.0.0",
-  "description": "xtrakt canonical CSS design tokens (Stripe-style). Single source of truth for every FE.",
+  "version": "2.0.0",
+  "description": "xtrakt canonical CSS design tokens (fluex brand). Single source of truth for every FE — purple/cyan palette, Geist + Instrument Serif type, mirrored from xtrakt-site.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {

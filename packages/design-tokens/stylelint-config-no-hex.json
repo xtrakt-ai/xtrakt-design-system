@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "fluex design system: use design tokens (var(--xt-*)) instead of raw hex colors. Allowed only inside the design-tokens package itself, where tokens are defined.",
+        "severity": "error"
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.min.css",
+    "packages/design-tokens/**"
+  ]
+}

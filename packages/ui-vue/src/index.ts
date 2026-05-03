@@ -7,6 +7,8 @@ export { default as XBadge } from './components/XBadge.vue'
 export { default as XSkeleton } from './components/XSkeleton.vue'
 export { default as XCopyUrlButton } from './components/XCopyUrlButton.vue'
 export { default as XBulkActionBar } from './components/XBulkActionBar.vue'
+export { default as XShell } from './components/XShell.vue'
+export type { XShellNavItem, XShellBrand, XShellUser } from './components/XShell.vue'
 
 // Composables
 export { useNotifications } from './composables/useNotifications'

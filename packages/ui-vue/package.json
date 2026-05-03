@@ -1,6 +1,6 @@
 {
   "name": "@xtrakt-ai/ui-vue",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "xtrakt UI primitives for Vue 3 — XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, XShell (app-shell sidebar+topbar), useNotifications, useExportCsv, useOptimistic, useSelection, useCan, useGlobalShortcuts.",
   "license": "UNLICENSED",
   "private": false,

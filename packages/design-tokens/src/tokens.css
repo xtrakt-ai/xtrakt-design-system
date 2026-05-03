@@ -81,6 +81,7 @@
   --color-warning:        #c27803;
   --color-warning-soft:   rgba(194, 120, 3, .10);
   --color-danger:         #cd3d64;
+  --color-danger-hover:   #b62f55;
   --color-danger-soft:    rgba(205, 61, 100, .10);
   --color-info:           #2563eb;
   --color-info-soft:      rgba(37, 99, 235, .10);
@@ -310,7 +311,7 @@ button, input, select, textarea {
 .xt-redesign .xt-btn--ghost:hover { background: var(--paper-soft); color: var(--ink); }
 
 .xt-redesign .xt-btn--danger { background: var(--color-danger); color: var(--text-inverse); }
-.xt-redesign .xt-btn--danger:hover { background: #b62f55; }
+.xt-redesign .xt-btn--danger:hover { background: var(--color-danger-hover); }
 
 .xt-redesign .xt-btn--icon { width: var(--xt-ctrl-h); padding: 0; }
 .xt-redesign .xt-btn--sm   { height: var(--xt-ctrl-h-sm); padding: 0 var(--xt-sp-3); font-size: 13px; }

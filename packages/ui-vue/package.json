@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/ui-vue",
-  "version": "1.6.0",
-  "description": "xtrakt UI primitives for Vue 3 — XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, XShell (app-shell sidebar+topbar), useNotifications, useExportCsv, useOptimistic, useSelection, useCan, useGlobalShortcuts.",
+  "version": "1.7.0",
+  "description": "xtrakt UI primitives for Vue 3 \u2014 XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, XShell (app-shell sidebar+topbar), useNotifications, useExportCsv, useOptimistic, useSelection, useCan, useGlobalShortcuts.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {
@@ -16,7 +16,9 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./style.css": "./dist/style.css",
+    "./dist/style.css": "./dist/style.css"
   },
   "files": [
     "dist",

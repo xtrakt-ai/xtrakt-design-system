@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export interface XShellNavItem {
   label: string
@@ -269,7 +269,7 @@ const clickOutside: Directive<HTMLElement, () => void> = {
  * because Vue 3 SFC <script setup> can't expose a recursive sub-component
  * to its own template without this wrapper.
  */
-const NavNode = defineComponent({
+const NavNode: any = defineComponent({
   name: 'XShellNavNode',
   props: {
     item: { type: Object as PropType<{ label: string; to?: string; icon?: string; ariaLabel?: string; children?: any[] }>, required: true },
@@ -279,8 +279,8 @@ const NavNode = defineComponent({
     isExpanded: { type: Function as PropType<(p: string) => boolean>, required: true },
     toggle: { type: Function as PropType<(p: string, e?: Event) => void>, required: true },
   },
-  setup(p) {
-    return () => {
+  setup(p): () => any {
+    return (): any => {
       const hasChildren = !!(p.item.children && p.item.children.length)
       const showChildren = hasChildren && p.isExpanded(p.path) && p.depth < 2
       const labelTitle = p.collapsed ? (p.item.ariaLabel ?? p.item.label) : undefined
@@ -320,10 +320,10 @@ const NavNode = defineComponent({
         class: ['xt-shell__nav-row', { 'xt-shell__nav-row--child': p.depth > 0, 'xt-shell__nav-row--grandchild': p.depth > 1 }],
       }, rowChildren)
 
-      const childrenBlock = showChildren
+      const childrenBlock: any = showChildren
         ? h('div', {
             class: ['xt-shell__nav-children', `xt-shell__nav-children--depth-${p.depth}`],
-          }, (p.item.children ?? []).map((child, j) => h(NavNode, {
+          }, (p.item.children ?? []).map((child: any, j: number) => h(NavNode, {
             item: child, depth: p.depth + 1, path: `${p.path}.${j}`,
             collapsed: p.collapsed, isExpanded: p.isExpanded, toggle: p.toggle,
           })))

@@ -14,6 +14,20 @@ the design-standardization rollout.
 
 All three publish to GitHub Packages (`npm.pkg.github.com/xtrakt-ai`).
 
+## Token governance
+
+New frontend code should use the semantic token family (`--color-primary`,
+`--surface-card`, `--text-muted`, `--radius-md`, `--shadow-card`, etc.).
+Aliases such as `--brand-primary`, `--xt-primary`, `--neu-accent`, and
+`--accent` remain compatibility-only for migrated screens and tenant-branding
+bridges.
+
+Run `npm run lint:tokens:legacy` in this repository to ensure design-system
+source does not introduce new alias usage outside the canonical token file. The
+published design-tokens package also includes
+`stylelint-config-no-legacy-tokens.json` so consumer apps can enforce the same
+rule in CI.
+
 ## Migration plan (per FE)
 
 Each FE currently ships:

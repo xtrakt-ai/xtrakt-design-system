@@ -11,6 +11,7 @@
   "files": [
     "src/tokens.css",
     "src/fonts",
+    "stylelint-config-no-legacy-tokens.json",
     "README.md"
   ],
   "exports": {

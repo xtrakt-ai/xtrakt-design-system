@@ -10,12 +10,12 @@
  * identical copy at src/styles/design-tokens.css — keep them in sync.
  *
  * Naming policy
- *   - --brand-* / --ink / --paper / --font-display etc. are the *canonical*
- *     names that mirror xtrakt-site. Prefer these in NEW code.
- *   - --xt-*  remain supported as aliases (Stripe-style migration shim) and
- *     now resolve to the same fluex values — old screens keep working.
- *   - --color-*, --surface-*, --text-*, --radius-*, --shadow-* are the
- *     semantic cross-FE aliases.
+ *   - --color-*, --surface-*, --text-*, --radius-*, --shadow-*, --border-*,
+ *     --font-* and --focus-* are canonical for new application code.
+ *   - --brand-* / --ink / --paper are package-internal palette primitives.
+ *     Keep them in this source-of-truth file, but do not use them directly
+ *     in app components unless a tenant-branding bridge explicitly requires it.
+ *   - --xt-* / --accent / --neu-* remain compatibility aliases only.
  * ========================================================================= */
 
 /* R-05-root: fonts are self-hosted from this package's `fonts/` folder.
@@ -232,10 +232,11 @@
 
   --font-sans:              var(--font-body);
 
-  /* Legacy aliases observed across apps. Keep boring so old variable names
-   * never become competing design systems. */
+  /* Legacy aliases observed across apps. Compatibility only: new app code
+   * should use semantic aliases such as --color-primary and --surface-card. */
   --xt-primary:             var(--brand-primary);
   --accent:                 var(--brand-primary);
+  --neu-accent:             var(--brand-primary);
 }
 
 /* =========================================================================

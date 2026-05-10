@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "declaration-property-value-disallowed-list": {
+      "/.*/": [
+        "/var\\(--(?:brand-primary(?:-deep|-soft)?|xt-primary|accent|neu-accent)\\b/"
+      ]
+    }
+  }
+}

@@ -19,6 +19,24 @@ The older `--xt-*` variables remain the implementation layer. Legacy aliases
 are intentionally mapped to the canonical tokens so apps can migrate without a
 large visual rewrite.
 
+## Guardrails
+
+This package ships `stylelint-config-no-legacy-tokens.json` to block new direct
+uses of compatibility aliases in app styles. Consumers can extend it from their
+own Stylelint config after importing `@xtrakt-ai/design-tokens`.
+
+The design-system repository also includes a zero-dependency checker:
+
+```bash
+npm run lint:tokens:legacy
+```
+
+To scan a consumer app during migration, run the script with explicit roots:
+
+```bash
+node scripts/check-legacy-token-usage.mjs ../xtrakt-portal-fe/src ../xtrakt-sign-fe/src
+```
+
 Canonical CSS design tokens for xtrakt. Stripe-style "technical authority" —
 white surfaces, hairline borders, indigo brand `#635bff`, flat shadows.
 

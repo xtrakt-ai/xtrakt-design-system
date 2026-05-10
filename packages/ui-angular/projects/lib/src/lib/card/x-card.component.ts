@@ -1,0 +1,55 @@
+import { Component, computed, input } from '@angular/core'
+
+/**
+ * Canonical xtrakt card (Angular). Mirrors the Vue equivalent in
+ * `@xtrakt-ai/ui-vue`. `interactive` switches to the `xt-tile` style
+ * with hover lift and click cursor — used by selectable surfaces like
+ * model picker tiles.
+ *
+ * Usage:
+ *   <x-card><h3>Title</h3><p>Body</p></x-card>
+ *   <x-card [flat]="true">Borderless surface</x-card>
+ *   <x-card [interactive]="true" (click)="select()">Hoverable tile</x-card>
+ */
+@Component({
+  selector: 'x-card',
+  standalone: true,
+  template: `
+    <div [class]="cls()">
+      <ng-content />
+    </div>
+  `,
+  styles: [`
+    :host { display: block; }
+    .xt-card {
+      background: var(--surface, #fff);
+      border: 1px solid var(--line, #e3e8ee);
+      border-radius: var(--xt-r-card, 12px);
+      padding: var(--xt-sp-4, 16px) var(--xt-sp-5, 20px);
+      box-shadow: var(--neu-raised-sm, 0 1px 3px rgba(50, 50, 93, .08), 0 1px 2px rgba(0, 0, 0, .04));
+    }
+    .xt-card--flat { box-shadow: none; }
+    .xt-tile {
+      background: var(--surface, #fff);
+      border: 1px solid var(--line, #e3e8ee);
+      border-radius: var(--xt-r-card, 12px);
+      padding: var(--xt-sp-4, 16px);
+      cursor: pointer;
+      transition: box-shadow 150ms, transform 150ms, border-color 150ms;
+    }
+    .xt-tile:hover {
+      border-color: var(--brand-primary, #581cff);
+      box-shadow: 0 4px 12px rgba(10, 37, 64, 0.08);
+      transform: translateY(-1px);
+    }
+  `],
+})
+export class XCardComponent {
+  readonly flat = input<boolean>(false)
+  readonly interactive = input<boolean>(false)
+
+  readonly cls = computed(() => {
+    if (this.interactive()) return 'xt-tile'
+    return this.flat() ? 'xt-card xt-card--flat' : 'xt-card'
+  })
+}

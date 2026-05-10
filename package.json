@@ -5,6 +5,7 @@
   "description": "xtrakt unified design tokens + UI primitives. Source of truth replacing the per-FE mirrors.",
   "workspaces": [
     "packages/design-tokens",
+    "packages/frontend-auth",
     "packages/ui-vue",
     "packages/ui-angular"
   ],

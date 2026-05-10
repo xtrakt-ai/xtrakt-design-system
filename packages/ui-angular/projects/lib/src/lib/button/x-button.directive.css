@@ -1,0 +1,93 @@
+/* ============================================================================
+ * x-button directive sidecar styles
+ *
+ * Shipped with @xtrakt-ai/ui-angular@1.4.0+. Consumer must import this file
+ * once at app startup (e.g. in src/styles.scss):
+ *
+ *   @import "@xtrakt-ai/ui-angular/projects/lib/src/lib/button/x-button.directive.css";
+ *
+ * Selectors target the [data-x-button] attribute that XButtonDirective applies
+ * to the host element — kept distinct from the .xt-btn classes used by the
+ * wrapper component (XButtonComponent) so the two APIs never collide.
+ * ========================================================================= */
+
+[data-x-button] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--xt-sp-2, 8px);
+  height: var(--xt-ctrl-h, 40px);
+  padding: 0 var(--xt-sp-4, 16px);
+  font-family: var(--xt-font, 'Inter', system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: var(--xt-r-ctrl, 8px);
+  cursor: pointer;
+  transition: background 150ms, color 150ms, border-color 150ms, box-shadow 150ms;
+  text-decoration: none;
+}
+
+[data-x-button]:focus-visible {
+  outline: none;
+  box-shadow: var(--xt-focus-ring, 0 0 0 3px rgba(88, 28, 255, 0.3));
+}
+
+[data-x-button]:disabled,
+[data-x-button][aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variants */
+[data-x-button][data-x-button-variant="primary"] {
+  background: var(--brand-primary, #581cff);
+  color: var(--text-inverse, #fff);
+}
+[data-x-button][data-x-button-variant="primary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--brand-primary-deep, #4318cc);
+}
+
+[data-x-button][data-x-button-variant="secondary"] {
+  background: var(--surface, #fff);
+  color: var(--ink, #0a2540);
+  border-color: var(--line, #e3e8ee);
+}
+[data-x-button][data-x-button-variant="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--paper-soft, #f7f9fc);
+}
+
+[data-x-button][data-x-button-variant="ghost"] {
+  background: transparent;
+  color: var(--muted, #697386);
+}
+[data-x-button][data-x-button-variant="ghost"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--paper-soft, #f7f9fc);
+  color: var(--ink, #0a2540);
+}
+
+[data-x-button][data-x-button-variant="danger"] {
+  background: var(--color-danger, #cd3d64);
+  color: var(--text-inverse, #fff);
+}
+[data-x-button][data-x-button-variant="danger"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-danger-hover, #b03555);
+}
+
+/* Sizes */
+[data-x-button][data-x-button-size="sm"] {
+  height: var(--xt-ctrl-h-sm, 32px);
+  padding: 0 var(--xt-sp-3, 12px);
+  font-size: 13px;
+}
+
+[data-x-button][data-x-button-size="lg"] {
+  height: var(--xt-ctrl-h-lg, 48px);
+  padding: 0 var(--xt-sp-5, 20px);
+  font-size: 15px;
+}
+
+[data-x-button][data-x-button-size="icon"] {
+  width: var(--xt-ctrl-h, 40px);
+  padding: 0;
+}

@@ -1,6 +1,6 @@
 {
   "name": "@xtrakt-ai/frontend-auth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared browser auth helpers for xTrakt satellite frontends.",
   "type": "module",
   "main": "./dist/index.js",

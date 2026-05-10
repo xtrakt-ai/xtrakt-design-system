@@ -1,6 +1,6 @@
 export const XTRAKT_SESSION_HINT_COOKIE = 'xtrakt_session_present'
 export const XTRAKT_CSRF_COOKIE = 'xtrakt_csrf'
-export const XTRAKT_CSRF_HEADER = 'X-Xtrakt-CSRF'
+export const XTRAKT_CSRF_HEADER = 'X-CSRF-Token'
 
 const LEGACY_AUTH_STORAGE_KEYS = [
   'access_token',

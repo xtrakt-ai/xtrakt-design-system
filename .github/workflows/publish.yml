@@ -20,8 +20,10 @@ on:
       - 'packages/ui-vue/**'
       - 'packages/ui-angular/**'
       - 'packages/design-tokens/**'
+      - 'packages/frontend-auth/**'
     tags:
       - 'vdesign-tokens@*'
+      - 'vfrontend-auth@*'
       - 'vui-vue@*'
       - 'vui-angular@*'
   workflow_dispatch:
@@ -30,7 +32,7 @@ on:
         description: 'Which package to publish'
         required: true
         type: choice
-        options: [design-tokens, ui-vue, ui-angular]
+        options: [design-tokens, frontend-auth, ui-vue, ui-angular]
 
 permissions:
   contents: read
@@ -67,7 +69,7 @@ jobs:
           else
             # branch push: detect packages with changed files
             changed=$(git diff --name-only HEAD^ HEAD || true)
-            for pkg in design-tokens ui-vue ui-angular; do
+            for pkg in design-tokens frontend-auth ui-vue ui-angular; do
               if printf '%s\n' "$changed" | grep -q "^packages/$pkg/"; then
                 targets+=("$pkg")
               fi
@@ -83,7 +85,7 @@ jobs:
           # Validate
           for pkg in "${targets[@]}"; do
             case "$pkg" in
-              design-tokens|ui-vue|ui-angular) ;;
+              design-tokens|frontend-auth|ui-vue|ui-angular) ;;
               *) echo "::error::unrecognized package '$pkg'"; exit 1 ;;
             esac
           done
@@ -113,7 +115,7 @@ jobs:
           scope: '@xtrakt-ai'
 
       # design-tokens ships only a CSS file — skip install + build for it.
-      # ui-vue / ui-angular need their dev deps to run vite/vue-tsc.
+      # frontend-auth / ui-vue / ui-angular need their dev deps to run tsc/vite/vue-tsc.
       # NODE_AUTH_TOKEN is required even on install: the workspace pulls
       # @xtrakt-ai/design-tokens from GH Packages as a peer-dep, and the
       # registry needs auth even for read access on private packages.

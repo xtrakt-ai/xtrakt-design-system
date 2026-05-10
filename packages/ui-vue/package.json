@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/ui-vue",
   "version": "1.7.0",
-  "description": "xtrakt UI primitives for Vue 3 \u2014 XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, XShell (app-shell sidebar+topbar), useNotifications, useExportCsv, useOptimistic, useSelection, useCan, useGlobalShortcuts.",
+  "description": "xtrakt UI primitives for Vue 3 - XBreadcrumb, XButton, XInput, XCard, XBadge, XSkeleton, XCopyUrlButton, XBulkActionBar, XShell (app-shell sidebar+topbar), useNotifications, useExportCsv, useOptimistic, useSelection, useCan, useGlobalShortcuts.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {
@@ -28,10 +28,10 @@
     "build": "vite build && vue-tsc --emitDeclarationOnly --declaration --outDir dist"
   },
   "peerDependencies": {
+    "@xtrakt-ai/design-tokens": "^2.0.0",
     "vue": "^3.4.0",
     "vue-router": "^4.3.0",
-    "vue-toastification": "^2.0.0-rc.5",
-    "@xtrakt-ai/design-tokens": "^2.0.0"
+    "vue-toastification": "^2.0.0-rc.5"
   },
   "peerDependenciesMeta": {
     "vue-toastification": {
@@ -39,9 +39,9 @@
     }
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.0",
+    "@vitejs/plugin-vue": "^6.0.6",
     "typescript": "^5.4.0",
-    "vite": "^5.4.0",
+    "vite": "^8.0.11",
     "vue": "^3.5.0",
     "vue-router": "^4.3.0",
     "vue-toastification": "^2.0.0-rc.5",

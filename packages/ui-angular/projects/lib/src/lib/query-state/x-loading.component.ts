@@ -31,12 +31,12 @@ import { Component, input } from '@angular/core'
       padding: var(--xt-sp-6, 24px);
       font-family: var(--xt-font, 'Inter', system-ui, sans-serif);
       font-size: 14px;
-      color: var(--muted, #697386);
+      color: var(--text-muted, #697386);
     }
     .xt-loading__spinner {
       width: 18px; height: 18px;
-      border: 2px solid var(--line, #e3e8ee);
-      border-top-color: var(--brand-primary, #581cff);
+      border: 2px solid var(--border-subtle, #e3e8ee);
+      border-top-color: var(--color-primary, #581cff);
       border-radius: 50%;
       animation: xt-loading-spin 0.8s linear infinite;
     }

@@ -52,19 +52,19 @@ export type XInputType = 'text' | 'email' | 'password' | 'number' | 'search' | '
       padding: 0 var(--xt-sp-3, 12px);
       font-family: var(--xt-font, 'Inter', system-ui, sans-serif);
       font-size: 14px;
-      color: var(--ink, #0a2540);
-      background: var(--surface, #fff);
-      border: 1px solid var(--line, #e3e8ee);
+      color: var(--text-primary, #0a2540);
+      background: var(--surface-card, #fff);
+      border: 1px solid var(--border-subtle, #e3e8ee);
       border-radius: var(--xt-r-ctrl, 8px);
       outline: none;
       transition: border-color 150ms, box-shadow 150ms;
     }
     .xt-input:focus {
-      border-color: var(--brand-primary, #581cff);
+      border-color: var(--color-primary, #581cff);
       box-shadow: var(--xt-focus-ring, 0 0 0 3px rgba(88, 28, 255, 0.3));
     }
-    .xt-input::placeholder { color: var(--muted-soft, #b8c0cc); }
-    .xt-input:disabled { opacity: 0.6; cursor: not-allowed; background: var(--paper-soft, #f7f9fc); }
+    .xt-input::placeholder { color: var(--text-subtle, #b8c0cc); }
+    .xt-input:disabled { opacity: 0.6; cursor: not-allowed; background: var(--surface-muted, #f7f9fc); }
     textarea.xt-input {
       height: auto;
       padding: var(--xt-sp-2, 8px) var(--xt-sp-3, 12px);

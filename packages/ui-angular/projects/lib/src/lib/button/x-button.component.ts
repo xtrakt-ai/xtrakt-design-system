@@ -5,7 +5,7 @@ export type XButtonSize = 'sm' | 'base' | 'lg' | 'icon'
 
 /**
  * Canonical xtrakt button (Angular). Mirrors the Vue equivalent in
- * `@xtrakt-ai/ui-vue`. Driven by --xt-* tokens shipped in
+ * `@xtrakt-ai/ui-vue`. Driven by canonical tokens shipped in
  * `@xtrakt-ai/design-tokens` with sensible inline fallbacks so the
  * component is usable even if the consumer hasn't imported tokens.css.
  *
@@ -45,27 +45,27 @@ export type XButtonSize = 'sm' | 'base' | 'lg' | 'icon'
     }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
     .xt-btn--primary {
-      background: var(--brand-primary, #581cff);
+      background: var(--color-primary, #581cff);
       color: var(--text-inverse, #fff);
     }
     .xt-btn--primary:hover:not(:disabled) {
-      background: var(--brand-primary-deep, #4318cc);
+      background: var(--color-primary-hover, #4318cc);
     }
     .xt-btn--secondary {
-      background: var(--surface, #fff);
-      color: var(--ink, #0a2540);
-      border-color: var(--line, #e3e8ee);
+      background: var(--surface-card, #fff);
+      color: var(--text-primary, #0a2540);
+      border-color: var(--border-subtle, #e3e8ee);
     }
     .xt-btn--secondary:hover:not(:disabled) {
-      background: var(--paper-soft, #f7f9fc);
+      background: var(--surface-muted, #f7f9fc);
     }
     .xt-btn--ghost {
       background: transparent;
-      color: var(--muted, #697386);
+      color: var(--text-muted, #697386);
     }
     .xt-btn--ghost:hover:not(:disabled) {
-      background: var(--paper-soft, #f7f9fc);
-      color: var(--ink, #0a2540);
+      background: var(--surface-muted, #f7f9fc);
+      color: var(--text-primary, #0a2540);
     }
     .xt-btn--danger {
       background: var(--color-danger, #cd3d64);

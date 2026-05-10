@@ -22,23 +22,23 @@ import { Component, computed, input } from '@angular/core'
   styles: [`
     :host { display: block; }
     .xt-card {
-      background: var(--surface, #fff);
-      border: 1px solid var(--line, #e3e8ee);
+      background: var(--surface-card, #fff);
+      border: 1px solid var(--border-subtle, #e3e8ee);
       border-radius: var(--xt-r-card, 12px);
       padding: var(--xt-sp-4, 16px) var(--xt-sp-5, 20px);
-      box-shadow: var(--neu-raised-sm, 0 1px 3px rgba(50, 50, 93, .08), 0 1px 2px rgba(0, 0, 0, .04));
+      box-shadow: var(--shadow-card, 0 1px 3px rgba(50, 50, 93, .08), 0 1px 2px rgba(0, 0, 0, .04));
     }
     .xt-card--flat { box-shadow: none; }
     .xt-tile {
-      background: var(--surface, #fff);
-      border: 1px solid var(--line, #e3e8ee);
+      background: var(--surface-card, #fff);
+      border: 1px solid var(--border-subtle, #e3e8ee);
       border-radius: var(--xt-r-card, 12px);
       padding: var(--xt-sp-4, 16px);
       cursor: pointer;
       transition: box-shadow 150ms, transform 150ms, border-color 150ms;
     }
     .xt-tile:hover {
-      border-color: var(--brand-primary, #581cff);
+      border-color: var(--color-primary, #581cff);
       box-shadow: 0 4px 12px rgba(10, 37, 64, 0.08);
       transform: translateY(-1px);
     }

@@ -274,7 +274,7 @@ button, input, select, textarea {
   font-family: var(--font-italic);
   font-style: italic;
   font-weight: 400;
-  color: var(--brand-primary);
+  color: var(--color-primary);
   letter-spacing: -0.015em;
 }
 
@@ -287,14 +287,14 @@ button, input, select, textarea {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--brand-primary);
+  color: var(--color-primary);
 }
 .eyebrow::before {
   content: "";
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  background: var(--brand-primary);
+  background: var(--color-primary);
   box-shadow: 0 0 0 4px rgba(88, 28, 255, 0.12);
 }
 
@@ -305,12 +305,12 @@ button, input, select, textarea {
 
 .xt-redesign {
   font-family: var(--font-body);
-  color: var(--ink);
-  background: var(--surface);
+  color: var(--text-primary);
+  background: var(--surface-card);
 }
 
 .xt-redesign :is(h1, h2, h3, h4, h5) {
-  color: var(--ink);
+  color: var(--text-primary);
   font-family: var(--font-display);
   letter-spacing: -.02em;
   font-weight: 500;
@@ -332,19 +332,19 @@ button, input, select, textarea {
 .xt-redesign .xt-btn:focus-visible { outline: none; box-shadow: var(--xt-focus-ring); }
 
 .xt-redesign .xt-btn--primary {
-  background: var(--brand-primary); color: var(--text-inverse);
+  background: var(--color-primary); color: var(--text-inverse);
   box-shadow: 0 6px 22px -10px rgba(88, 28, 255, 0.55);
 }
-.xt-redesign .xt-btn--primary:hover { background: var(--brand-primary-deep); }
+.xt-redesign .xt-btn--primary:hover { background: var(--color-primary-hover); }
 
 .xt-redesign .xt-btn--secondary {
-  background: var(--surface); color: var(--ink);
-  border-color: var(--line);
+  background: var(--surface-card); color: var(--text-primary);
+  border-color: var(--border-subtle);
 }
-.xt-redesign .xt-btn--secondary:hover { background: var(--paper-soft); }
+.xt-redesign .xt-btn--secondary:hover { background: var(--surface-muted); }
 
-.xt-redesign .xt-btn--ghost { color: var(--muted); }
-.xt-redesign .xt-btn--ghost:hover { background: var(--paper-soft); color: var(--ink); }
+.xt-redesign .xt-btn--ghost { color: var(--text-muted); }
+.xt-redesign .xt-btn--ghost:hover { background: var(--surface-muted); color: var(--text-primary); }
 
 .xt-redesign .xt-btn--danger { background: var(--color-danger); color: var(--text-inverse); }
 .xt-redesign .xt-btn--danger:hover { background: var(--color-danger-hover); }
@@ -359,19 +359,19 @@ button, input, select, textarea {
 .xt-redesign .xt-input {
   height: var(--xt-ctrl-h); width: 100%;
   padding: 0 var(--xt-sp-3);
-  background: var(--surface); color: var(--ink);
-  border: 1px solid var(--line); border-radius: var(--xt-r-ctrl);
+  background: var(--surface-card); color: var(--text-primary);
+  border: 1px solid var(--border-subtle); border-radius: var(--xt-r-ctrl);
   font: 14px var(--font-body);
   transition: border-color var(--xt-dur-fast) var(--xt-ease),
               box-shadow var(--xt-dur-fast) var(--xt-ease);
 }
-.xt-redesign .xt-input:focus { outline: none; border-color: var(--brand-primary); box-shadow: var(--xt-focus-ring); }
-.xt-redesign .xt-input::placeholder { color: var(--muted-soft); }
+.xt-redesign .xt-input:focus { outline: none; border-color: var(--color-primary); box-shadow: var(--xt-focus-ring); }
+.xt-redesign .xt-input::placeholder { color: var(--text-subtle); }
 .xt-redesign textarea.xt-input { height: auto; padding: var(--xt-sp-2) var(--xt-sp-3); resize: vertical; min-height: 80px; }
 
 /* Card */
 .xt-redesign .xt-card {
-  background: var(--surface); border: 1px solid var(--line);
+  background: var(--surface-card); border: 1px solid var(--border-subtle);
   border-radius: var(--xt-r-card); padding: var(--xt-sp-5);
   box-shadow: var(--shadow-card);
 }
@@ -379,8 +379,8 @@ button, input, select, textarea {
 
 /* Tile — interactive card */
 .xt-redesign .xt-tile {
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--xt-r-card);
   padding: var(--xt-sp-5);
   box-shadow: var(--shadow-card);
@@ -392,9 +392,9 @@ button, input, select, textarea {
 .xt-redesign .xt-tile:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-deep);
-  border-color: var(--brand-primary-soft);
+  border-color: var(--color-primary-soft);
 }
-.xt-redesign .xt-tile--active { border-color: var(--brand-primary); box-shadow: 0 0 0 1px var(--brand-primary); }
+.xt-redesign .xt-tile--active { border-color: var(--color-primary); box-shadow: 0 0 0 1px var(--color-primary); }
 
 /* Badge / Status pill */
 .xt-redesign .xt-badge {
@@ -406,7 +406,7 @@ button, input, select, textarea {
 .xt-redesign .xt-badge--warning { background: var(--color-warning-soft); color: var(--color-warning); }
 .xt-redesign .xt-badge--danger  { background: var(--color-danger-soft);  color: var(--color-danger); }
 .xt-redesign .xt-badge--info    { background: var(--color-info-soft);    color: var(--color-info); }
-.xt-redesign .xt-badge--muted   { background: var(--paper-soft); color: var(--muted); border: 1px solid var(--line); }
+.xt-redesign .xt-badge--muted   { background: var(--surface-muted); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
 /* Table */
 .xt-redesign .xt-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -417,7 +417,7 @@ button, input, select, textarea {
   letter-spacing: .06em; text-transform: uppercase;
   background: var(--paper-soft); border-bottom: 1px solid var(--line);
 }
-.xt-redesign .xt-table tbody tr:hover { background: var(--paper-soft); }
+.xt-redesign .xt-table tbody tr:hover { background: var(--surface-muted); }
 
 /* Hero with brand gradient */
 .xt-redesign .xt-hero {
@@ -433,7 +433,7 @@ button, input, select, textarea {
 /* Icon container inside tile */
 .xt-redesign .xt-icon-box {
   width: 40px; height: 40px; border-radius: 6px;
-  background: var(--brand-primary-soft); color: var(--brand-primary);
+  background: var(--color-primary-soft); color: var(--color-primary);
   display: inline-flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
@@ -441,7 +441,7 @@ button, input, select, textarea {
 /* Section header above cards */
 .xt-redesign .xt-section-label {
   font: 500 11px/1.5 var(--font-body);
-  color: var(--muted);
+  color: var(--text-muted);
   letter-spacing: .06em;
   text-transform: uppercase;
 }

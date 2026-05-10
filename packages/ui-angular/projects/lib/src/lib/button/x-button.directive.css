@@ -41,29 +41,29 @@
 
 /* Variants */
 [data-x-button][data-x-button-variant="primary"] {
-  background: var(--brand-primary, #581cff);
+  background: var(--color-primary, #581cff);
   color: var(--text-inverse, #fff);
 }
 [data-x-button][data-x-button-variant="primary"]:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--brand-primary-deep, #4318cc);
+  background: var(--color-primary-hover, #4318cc);
 }
 
 [data-x-button][data-x-button-variant="secondary"] {
-  background: var(--surface, #fff);
-  color: var(--ink, #0a2540);
-  border-color: var(--line, #e3e8ee);
+  background: var(--surface-card, #fff);
+  color: var(--text-primary, #0a2540);
+  border-color: var(--border-subtle, #e3e8ee);
 }
 [data-x-button][data-x-button-variant="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--paper-soft, #f7f9fc);
+  background: var(--surface-muted, #f7f9fc);
 }
 
 [data-x-button][data-x-button-variant="ghost"] {
   background: transparent;
-  color: var(--muted, #697386);
+  color: var(--text-muted, #697386);
 }
 [data-x-button][data-x-button-variant="ghost"]:hover:not(:disabled):not([aria-disabled="true"]) {
-  background: var(--paper-soft, #f7f9fc);
-  color: var(--ink, #0a2540);
+  background: var(--surface-muted, #f7f9fc);
+  color: var(--text-primary, #0a2540);
 }
 
 [data-x-button][data-x-button-variant="danger"] {

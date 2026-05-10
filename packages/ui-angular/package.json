@@ -1,7 +1,7 @@
 {
   "name": "@xtrakt-ai/ui-angular",
-  "version": "1.3.0",
-  "description": "xtrakt UI primitives for Angular — XBreadcrumb, XShell, XButton, XInput, XField, XCard, XBadge, XLoading, XEmpty, XAlert. Standalone, ships source TypeScript; consumers compile as part of their app.",
+  "version": "1.4.0",
+  "description": "xtrakt UI primitives for Angular — XBreadcrumb, XShell, XButton (component + xButton directive), XInput, XField, XCard, XBadge, XLoading, XEmpty, XAlert. Standalone, ships source TypeScript; consumers compile as part of their app.",
   "license": "UNLICENSED",
   "private": false,
   "publishConfig": {

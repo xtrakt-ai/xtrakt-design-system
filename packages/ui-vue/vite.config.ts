@@ -9,6 +9,7 @@ export default defineConfig({
       entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: 'XtraktUiVue',
       fileName: 'index',
+      cssFileName: 'style',
       formats: ['es'],
     },
     rollupOptions: {

@@ -9,6 +9,13 @@ export { default as XCopyUrlButton } from './components/XCopyUrlButton.vue'
 export { default as XBulkActionBar } from './components/XBulkActionBar.vue'
 export { default as XShell } from './components/XShell.vue'
 export type { XShellNavItem, XShellBrand, XShellUser } from './components/XShell.vue'
+export { default as XPublicFlowShell } from './components/XPublicFlowShell.vue'
+export type {
+  XPublicFlowContextItem,
+  XPublicFlowSecurityItem,
+  XPublicFlowStatusVariant,
+  XPublicFlowStep,
+} from './components/XPublicFlowShell.vue'
 
 // Composables
 export { useNotifications } from './composables/useNotifications'

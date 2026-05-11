@@ -88,6 +88,31 @@ Props: `variant` (`primary` | `secondary` | `ghost` | `danger`), `size`
 <XBadge variant="danger">Failed</XBadge>
 ```
 
+### `<XPublicFlowShell>`
+
+Standard Trust Rail layout for public routes such as signing, shared documents,
+MagicLinks, public tickets, and shared templates.
+
+```vue
+<XPublicFlowShell
+  brand-name="fluex Sign"
+  eyebrow="Signature request"
+  title="Review and sign"
+  status-label="Protected signature flow"
+  :steps="[
+    { label: 'Verify identity', state: 'done' },
+    { label: 'Review', state: 'active' },
+    { label: 'Sign', state: 'pending' },
+  ]"
+  :security-items="[
+    { label: 'Protected link', description: 'This session is validated before access.' },
+    { label: 'Limited access', description: 'No account is required for this public flow.' },
+  ]"
+>
+  <p>Flow content goes here.</p>
+</XPublicFlowShell>
+```
+
 ## Migrating from per-FE mirrors
 
 Each Vue FE that consumed the mirrored breadcrumb deletes its local copy:

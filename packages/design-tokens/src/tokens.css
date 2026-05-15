@@ -5,9 +5,10 @@
  * Every FE inherits the same purple/cyan palette, the same Geist + Instrument
  * Serif type pair and the same shadow/radius scale through this file.
  *
- * This file is published as @xtrakt-ai/design-tokens. Angular SPAs that ship
- * a local mirror (platform-fe, id-fe, template-fe, tickets-fe) keep an
- * identical copy at src/styles/design-tokens.css — keep them in sync.
+ * This file is published as @xtrakt-ai/design-tokens. Single source of
+ * truth — every FE imports it via `@import "@xtrakt-ai/design-tokens/tokens.css"`
+ * (D-03 decision, 2026-05-15). Local mirrors at src/styles/design-tokens.css
+ * are deprecated; remove them once the consuming FE has bumped to ^2.3.0.
  *
  * Naming policy
  *   - --color-*, --surface-*, --text-*, --radius-*, --shadow-*, --border-*,
@@ -149,6 +150,12 @@
   --xt-brand:         var(--brand-primary);
   --xt-brand-hover:   var(--brand-primary-deep);
   --xt-brand-soft:    var(--brand-primary-soft);
+  /* Mid-tone purple between --brand-primary (#581cff) and --brand-primary-soft
+   * (#ede5ff). Consumed by the platform-fe template-list engine-icon variant
+   * for engine=google so trained-classifier templates read visually distinct
+   * from internal xTrakt classifier templates without exposing the provider
+   * brand. Promoted from the platform-fe vendored mirror in 2.3.0 (D-03). */
+  --xt-brand-light:   #a78bfa;
   --xt-accent:        var(--brand-accent);
   --xt-brand-gradient: var(--brand-gradient);
 
@@ -157,6 +164,15 @@
   --xt-success-soft:  var(--color-success-soft);
   --xt-warning:       var(--color-warning);
   --xt-warning-soft:  var(--color-warning-soft);
+  /* Warm-amber banner palette (quota-exceeded redirect, plan-upgrade hero).
+   * The semantic --color-warning / --xt-warning pair is the dark amber from
+   * fluex; this group is the lighter banner-fill family that the upgrade
+   * screens use. Promoted from the platform-fe vendored mirror in 2.3.0 (D-03). */
+  --xt-warning-bg:          #fff4e5;
+  --xt-warning-border:      #ffb84d;
+  --xt-warning-border-strong: #f59e0b;
+  --xt-warning-text:        #7a4f01;
+  --xt-warning-text-strong: #5a3700;
   --xt-danger:        var(--color-danger);
   --xt-danger-soft:   var(--color-danger-soft);
   --xt-info:          var(--color-info);
@@ -449,3 +465,78 @@ button, input, select, textarea {
 
 /* Divider */
 .xt-redesign .xt-divider { height: 1px; background: var(--line); margin: var(--xt-sp-4) 0; }
+
+/* ============================================================================
+ * DARK MODE — token overrides for `:root[data-theme="dark"]`
+ *
+ * Activated by each FE's theme listener. The activation surface differs by
+ * app:
+ *   - Angular shell apps (platform-fe) own a ThemeService that sets
+ *     `<html data-theme="dark">` from a user preference (light | dark | system),
+ *     persisted in localStorage and synced to `prefers-color-scheme`.
+ *   - Iframed satellites (id-fe, ecm-fe, sign-fe, workflow-fe, template-fe,
+ *     tickets-fe, portal-fe) listen for an `xtrakt-theme` postMessage from
+ *     the parent shell, fall back to localStorage["xtrakt.theme"] when opened
+ *     standalone, and to `prefers-color-scheme` via matchMedia for the
+ *     "system" choice.
+ *
+ * Strategy: only override the PRIMITIVES (--ink, --paper, --surface, --line,
+ * --muted family + a few semantic colors that need contrast tuning). Every
+ * derived token (--xt-bg, --surface-page, --text-primary, --color-success,
+ * --shadow-card, …) is wired through `var()` chains, so they pick up the
+ * new values automatically.
+ *
+ * Brand purple/cyan stay the same — they look correct on both themes.
+ * Color-success / -warning / -danger / -info shift slightly toward higher
+ * luminance so they stay readable against the dark surface palette.
+ *
+ * If a dark-mode test reveals a hardcoded color in some component SCSS
+ * (instead of a token reference), fix that component to use a token.
+ * Do NOT add new dark-mode-only selectors to this file — that fragments
+ * the token contract and forces every consumer to be theme-aware.
+ *
+ * Promoted from the platform-fe / id-fe vendored mirrors in 2.3.0 (D-03).
+ * ========================================================================= */
+
+:root[data-theme="dark"] {
+  /* ── Surfaces (the inverse of the light paper-on-white feel) ──────────── */
+  --paper:         #0f0d1a;   /* page background — deep midnight purple */
+  --paper-soft:    #15132a;   /* slightly elevated zone (sidebar, modals) */
+  --paper-warm:    #161325;
+  --surface:       #1a172e;   /* card surface — one step up from paper */
+
+  /* ── Lines / dividers — stay subtle on dark bg ───────────────────────── */
+  --line:          #2a2541;
+  --line-soft:     #211d36;
+
+  /* ── Text — inverted scale ────────────────────────────────────────────── */
+  --ink:           #f5f3ff;   /* primary text */
+  --ink-2:         #d8d2ee;
+  --ink-3:         #b6afd1;
+
+  --muted:         #aea8c9;   /* secondary text */
+  --muted-soft:    #837e9c;
+
+  /* ── XT alias overrides for the few that aren't pure var() chains ─────── */
+  --xt-border:        var(--line);
+  --xt-border-strong: #3d3559;
+  --xt-fg-inverse:    #0f0d1a;   /* dark-bg-on-light-text inversion */
+
+  /* ── Semantic colors — tuned for contrast on dark ─────────────────────── */
+  --color-success:        #4ade80;
+  --color-success-soft:   rgba(74, 222, 128, .14);
+  --color-warning:        #fbbf24;
+  --color-warning-soft:   rgba(251, 191, 36, .14);
+  --color-danger:         #f87171;
+  --color-danger-soft:    rgba(248, 113, 113, .14);
+  --color-danger-hover:   #ef4444;
+  --color-info:           #60a5fa;
+  --color-info-soft:      rgba(96, 165, 250, .14);
+
+  /* ── Brand soft tints (the deep version is too subtle on dark) ────────── */
+  --brand-primary-soft:   rgba(88, 28, 255, .22);
+  --brand-accent-soft:    rgba(0, 210, 255, .15);
+
+  /* ── Color-scheme hint so native form controls / scrollbars darken ────── */
+  color-scheme: dark;
+}

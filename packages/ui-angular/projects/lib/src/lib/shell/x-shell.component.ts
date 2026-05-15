@@ -2,7 +2,36 @@ import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, computed, signal } from '@angular/core'
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router'
 import { filter } from 'rxjs/operators'
-import { XShellBrand, XShellNavItem, XShellUser } from './shell-nav-item'
+import { X_SHELL_ICON_NAMES, XShellBrand, XShellIconName, XShellNavItem, XShellUser } from './shell-nav-item'
+
+const X_SHELL_ICON_PATHS: Record<XShellIconName, string> = {
+    admin: 'M12 3l7 4v5c0 4.1-2.7 7.8-7 9-4.3-1.2-7-4.9-7-9V7l7-4zm0 3.2L8 8.5V12c0 2.7 1.5 5.1 4 6 2.5-.9 4-3.3 4-6V8.5l-4-2.3z',
+    apiKeys: 'M7 14a5 5 0 1 1 4.5-2.8L21 20.7 19.7 22 17 19.3 15.3 21 14 19.7l1.7-1.7-2-2A5 5 0 0 1 7 14zm0-3a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+    billing: 'M4 6h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 4h16V8H4v2zm3 5h5v-2H7v2z',
+    check: 'M9.2 16.6L4.9 12.3 3.5 13.7l5.7 5.7L21 7.6 19.6 6.2 9.2 16.6z',
+    clock: 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm1-10.4V6h-2v6.4l4.7 4.7 1.4-1.4-4.1-4.1z',
+    dashboard: 'M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM3 21h8v-6H3v6zm2-4h4v2H5v-2zm8-8h8V3h-8v6zm2-4h4v2h-4V5z',
+    database: 'M12 3c5 0 9 1.6 9 3.5v11c0 1.9-4 3.5-9 3.5s-9-1.6-9-3.5v-11C3 4.6 7 3 12 3zm0 2c-4.1 0-6.6 1-7 1.5.4.5 2.9 1.5 7 1.5s6.6-1 7-1.5C18.6 6 16.1 5 12 5zm0 5c-2.8 0-5.3-.5-7-1.4V12c.4.5 2.9 1.5 7 1.5s6.6-1 7-1.5V8.6c-1.7.9-4.2 1.4-7 1.4zm0 5.5c-2.8 0-5.3-.5-7-1.4v3.4c.4.5 2.9 1.5 7 1.5s6.6-1 7-1.5v-3.4c-1.7.9-4.2 1.4-7 1.4z',
+    developers: 'M8.7 16.3L4.4 12l4.3-4.3L7.3 6.3 1.6 12l5.7 5.7 1.4-1.4zm6.6 0l4.3-4.3-4.3-4.3 1.4-1.4 5.7 5.7-5.7 5.7-1.4-1.4zM11.2 20l-1.9-.6L12.8 4l1.9.6L11.2 20z',
+    document: 'M6 2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 2H6v16h12V9h-5V4zm1 0v3h3l-3-3z',
+    ecm: 'M4 5h6l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 4v9h16V9H4z',
+    edit: 'M4 17.3V21h3.7L18.6 10.1l-3.7-3.7L4 17.3zM20.7 8a1 1 0 0 0 0-1.4l-2.3-2.3a1 1 0 0 0-1.4 0l-1.4 1.4 3.7 3.7L20.7 8z',
+    folder: 'M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6zm2 2v10h14V8H5z',
+    home: 'M3 11l9-8 9 8-1.3 1.5L18 11v9h-5v-6h-2v6H6v-9l-1.7 1.5L3 11z',
+    latency: 'M12 20a8 8 0 1 1 8-8h-2a6 6 0 1 0-6 6v2zm1-8.4V7h-2v5.4l4 4 1.4-1.4-3.4-3.4zm5.5 4.9l1.4-1.4 2.1 2.1-4.8 4.8-2.1-2.1 1.4-1.4.7.7 1.3-1.3-.7-.7z',
+    memory: 'M7 3h10v3h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2v3H7v-3H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h2V3zm2 2v14h6V5H9zm-4 3v8h2V8H5zm12 0v8h2V8h-2z',
+    portal: 'M4 4h16v16H4V4zm2 2v12h12V6H6zm3 3h6v2H9V9zm0 4h6v2H9v-2z',
+    search: 'M10 18a8 8 0 1 1 5.3-2l4.4 4.3-1.4 1.4-4.3-4.4A8 8 0 0 1 10 18zm0-2a6 6 0 1 0 0-12 6 6 0 0 0 0 12z',
+    settings: 'M19.4 13.5c.1-.5.1-1 .1-1.5s0-1-.1-1.5l2-1.5-2-3.5-2.4 1a8 8 0 0 0-2.6-1.5L14 2h-4l-.4 3a8 8 0 0 0-2.6 1.5l-2.4-1-2 3.5 2 1.5A8.8 8.8 0 0 0 4.5 12c0 .5 0 1 .1 1.5l-2 1.5 2 3.5 2.4-1a8 8 0 0 0 2.6 1.5l.4 3h4l.4-3a8 8 0 0 0 2.6-1.5l2.4 1 2-3.5-2-1.5zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z',
+    sign: 'M16 3l5 5-11 11H5v-5L16 3zm0 2.8l-9 9V17h2.2l9-9L16 5.8zM4 21h16v2H4v-2z',
+    templates: 'M4 4h7v7H4V4zm2 2v3h3V6H6zm7-2h7v7h-7V4zm2 2v3h3V6h-3zM4 13h7v7H4v-7zm2 2v3h3v-3H6zm7-2h7v7h-7v-7zm2 2v3h3v-3h-3z',
+    tickets: 'M4 5h16v5a2 2 0 1 0 0 4v5H4v-5a2 2 0 1 0 0-4V5zm2 2v2.4a4 4 0 0 1 0 7.2V17h12v-.4a4 4 0 0 1 0-7.2V7H6z',
+    transactions: 'M7 7h11l-2.3-2.3L17 3.3 21.7 8 17 12.7l-1.3-1.4L18 9H7V7zm10 10H6l2.3 2.3L7 20.7 2.3 16 7 11.3l1.3 1.4L6 15h11v2z',
+    users: 'M8 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 2c-3.3 0-6 1.7-6 3.8V19h12v-2.2C14 14.7 11.3 13 8 13zm8.5-1.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM16 13c2.8.1 5 1.6 5 3.5V19h-5v-2.2c0-1.4-.7-2.7-2-3.8.6-.1 1.2-.1 2-.1z',
+    workflow: 'M5 5h5v5H5V5zm2 2v1h1V7H7zm7-2h5v5h-5V5zm2 2v1h1V7h-1zM5 14h5v5H5v-5zm2 2v1h1v-1H7zm7-2h5v5h-5v-5zm2 2v1h1v-1h-1zm-6-7h4v2h-4V9zm0 6h4v2h-4v-2z'
+}
+
+const X_SHELL_ICON_NAME_SET = new Set<string>(X_SHELL_ICON_NAMES)
 
 /**
  * Canonical xtrakt app shell (Angular). Mirrors the Vue equivalent in
@@ -115,7 +144,11 @@ import { XShellBrand, XShellNavItem, XShellUser } from './shell-nav-item'
                     class="xt-shell__nav-item"
                     [class.xt-shell__nav-item--has-children]="!!(item.children && item.children.length)"
                     [attr.title]="collapsed() ? (item.ariaLabel || item.label) : null">
-                    <span *ngIf="item.icon" class="xt-shell__nav-icon" [innerHTML]="item.icon" aria-hidden="true"></span>
+                    <span *ngIf="navIconPath(item) as iconPath" class="xt-shell__nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path [attr.d]="iconPath"></path>
+                        </svg>
+                    </span>
                     <span class="xt-shell__nav-label">{{ item.label }}</span>
                     <button
                         *ngIf="item.children && item.children.length"
@@ -138,7 +171,11 @@ import { XShellBrand, XShellNavItem, XShellUser } from './shell-nav-item'
                     [attr.aria-expanded]="isExpanded(path)"
                     [attr.title]="collapsed() ? (item.ariaLabel || item.label) : null"
                     (click)="toggleExpansion(path, $event)">
-                    <span *ngIf="item.icon" class="xt-shell__nav-icon" [innerHTML]="item.icon" aria-hidden="true"></span>
+                    <span *ngIf="navIconPath(item) as iconPath" class="xt-shell__nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path [attr.d]="iconPath"></path>
+                        </svg>
+                    </span>
                     <span class="xt-shell__nav-label">{{ item.label }}</span>
                     <span class="xt-shell__nav-chevron" [class.xt-shell__nav-chevron--open]="isExpanded(path)" aria-hidden="true">▾</span>
                 </button>
@@ -227,6 +264,11 @@ import { XShellBrand, XShellNavItem, XShellUser } from './shell-nav-item'
             width: 18px; height: 18px;
             display: inline-flex; align-items: center; justify-content: center;
             flex: 0 0 auto;
+        }
+        .xt-shell__nav-icon svg {
+            width: 18px; height: 18px;
+            display: block;
+            fill: currentColor;
         }
         .xt-shell__nav-label {
             flex: 1 1 auto; min-width: 0;
@@ -393,6 +435,12 @@ export class XShellComponent implements OnChanges {
 
     isExpanded(path: string): boolean {
         return this.expanded().has(path)
+    }
+
+    navIconPath(item: XShellNavItem): string | null {
+        const name = item.iconName || item.icon
+        if (!name || !X_SHELL_ICON_NAME_SET.has(name)) return null
+        return X_SHELL_ICON_PATHS[name as XShellIconName]
     }
 
     toggleExpansion(path: string, event?: Event): void {

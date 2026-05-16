@@ -22,15 +22,19 @@ Each FE keeps `src/styles/design-tokens.css` (Vue) or
 `src/src/styles/design-tokens.css` (Angular) plus a local
 `src/components/XBreadcrumb.vue` (Vue only).
 
-## Phase 1 — Package published (TODO operator)
+## Phase 1 — Packages published
 
-Operator steps:
+Current published workspace versions in this repository:
 
-1. `gh repo create xtrakt-ai/xtrakt-design-system --public --source . --push`
-2. From the repo root: `git tag vdesign-tokens@1.0.0 && git push --tags`
-3. Confirm the publish workflow succeeded; the package shows up at
-   `https://github.com/xtrakt-ai/packages` with version 1.0.0.
-4. Repeat tagging for `vui-vue@1.0.0` and `vui-angular@1.0.0`.
+| Package | Version |
+|---|---:|
+| `@xtrakt-ai/design-tokens` | `2.3.0` |
+| `@xtrakt-ai/ui-vue` | `1.8.2` |
+| `@xtrakt-ai/ui-angular` | `1.4.0` |
+
+The original operator bootstrap for `1.0.0` is complete. Ongoing package
+publishing is handled by the repo workflow and the per-package version
+bumps under `packages/*/package.json`.
 
 ## Phase 2 — Per-FE adoption
 
@@ -42,7 +46,7 @@ Status: `M` mirrored, `P` package + mirror, `D` mirror deleted.
 | xtrakt-sign-fe | D | D | `813359d` | main | Dockerfile npm ci → npm install. |
 | xtrakt-portal-fe | D | D | `4ad825c` | develop | Dockerfile npm ci → npm install. |
 | xtrakt-workflow-fe | D | n/a | `283174a` | main | Tokens only (no breadcrumb scope). |
-| xtrakt-platform-fe | M | n/a | — | main | Needs Cloud Build _NODE_AUTH_TOKEN substitution. |
+| xtrakt-platform-fe | M | P | — | main | Uses `@xtrakt-ai/ui-angular@^1.4.0`; design-token mirror still present pending D-03 Phase 2. |
 | xtrakt-id-fe | M | n/a | — | main | Needs Cloud Build _NODE_AUTH_TOKEN substitution. |
 | xtrakt-template-fe | M | M | — | main | Needs .npmrc + Dockerfile ARG. |
 | xtrakt-tickets-fe | M | M | — | main | Needs .npmrc + Dockerfile ARG. |

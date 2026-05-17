@@ -53,8 +53,8 @@ export class MenuComponent {
     private readonly transloco = inject(TranslocoService)
 
     nav: XShellNavItem[] = [
-        { label: 'Home', to: '/menu' },
-        { label: 'Templates', to: '/templates' },
+        { label: 'Home', to: '/menu', iconName: 'home' },
+        { label: 'Templates', to: '/templates', iconName: 'templates' },
         { label: 'Playground', to: '/playground' },
         // ... rest of MENU_ITEMS array filtered by user journey
     ]
@@ -90,7 +90,8 @@ configuration.
 ## Inputs
 
 - `brand: XShellBrand` (required) — `{ name, logoUrl? }`
-- `nav: XShellNavItem[]` (required) — `[{ label, to, icon?, ariaLabel? }]`
+- `nav: XShellNavItem[]` (required) — `[{ label, to, iconName?, ariaLabel? }]`.
+  `iconName` must be one of the shell's built-in names; raw SVG/HTML is not rendered.
 - `user: XShellUser | null` — `{ name?, email?, initials? }`
 - `logoutLabel: string` — defaults to "Logout"
 - `initialCollapsed: boolean` — start with sidebar collapsed

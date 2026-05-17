@@ -1,9 +1,40 @@
+export const X_SHELL_ICON_NAMES = [
+    'admin',
+    'apiKeys',
+    'billing',
+    'check',
+    'clock',
+    'dashboard',
+    'database',
+    'developers',
+    'document',
+    'ecm',
+    'edit',
+    'folder',
+    'home',
+    'latency',
+    'memory',
+    'portal',
+    'search',
+    'settings',
+    'sign',
+    'templates',
+    'tickets',
+    'transactions',
+    'users',
+    'workflow'
+] as const
+
+export type XShellIconName = typeof X_SHELL_ICON_NAMES[number]
+
 export interface XShellNavItem {
     label: string
     /** Route the item navigates to. Optional for parent nodes that only group children — when
      *  omitted (or set to ''), clicking the item just toggles expansion. */
     to?: string
-    /** Inline SVG markup; renders as an icon next to the label. */
+    /** Named shell icon rendered from the design-system whitelist. */
+    iconName?: XShellIconName
+    /** @deprecated Use iconName. Raw SVG/HTML markup is ignored for security. */
     icon?: string
     /** Visually-hidden a11y description for the icon-only collapsed state. */
     ariaLabel?: string

@@ -138,7 +138,7 @@ const X_SHELL_ICON_NAME_SET = new Set<string>(X_SHELL_ICON_NAMES)
 
                 <!-- Linkable item (has 'to') — renders as <a routerLink>. -->
                 <a
-                    *ngIf="item.to"
+                    *ngIf="item.to && !item.disabled"
                     [routerLink]="item.to"
                     routerLinkActive="xt-shell__nav-item--active"
                     class="xt-shell__nav-item"
@@ -161,6 +161,22 @@ const X_SHELL_ICON_NAME_SET = new Set<string>(X_SHELL_ICON_NAMES)
                         <span aria-hidden="true">▾</span>
                     </button>
                 </a>
+
+                <!-- Disabled leaf — visible for discoverability, but never navigates. -->
+                <button
+                    *ngIf="item.to && item.disabled"
+                    type="button"
+                    class="xt-shell__nav-item xt-shell__nav-item--disabled"
+                    [attr.aria-disabled]="true"
+                    [attr.title]="item.disabledReason || item.ariaLabel || item.label"
+                    disabled>
+                    <span *ngIf="navIconPath(item) as iconPath" class="xt-shell__nav-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" focusable="false">
+                            <path [attr.d]="iconPath"></path>
+                        </svg>
+                    </span>
+                    <span class="xt-shell__nav-label">{{ item.label }}</span>
+                </button>
 
                 <!-- Group-only parent (no 'to') — renders as a button that toggles expansion. -->
                 <button
@@ -250,6 +266,13 @@ const X_SHELL_ICON_NAME_SET = new Set<string>(X_SHELL_ICON_NAMES)
         .xt-shell__nav-item:hover {
             background: var(--xt-bg-hover, #f0f2f6);
             color: var(--xt-fg, #0a2540);
+        }
+        .xt-shell__nav-item--disabled,
+        .xt-shell__nav-item--disabled:hover {
+            background: transparent;
+            color: var(--xt-fg-muted, #425466);
+            cursor: not-allowed;
+            opacity: 0.52;
         }
         .xt-shell__nav-item--active {
             background: var(--xt-brand-soft, rgba(88, 28, 255, 0.08));

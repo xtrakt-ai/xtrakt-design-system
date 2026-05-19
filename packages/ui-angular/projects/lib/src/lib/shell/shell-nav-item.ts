@@ -45,6 +45,10 @@ export interface XShellNavItem {
     /** Initial expanded state for parent nodes. Defaults to false (collapsed). The shell
      *  also auto-expands any branch whose descendant matches the current router URL. */
     expanded?: boolean
+    /** Render the item as visible but unavailable. Disabled items do not navigate. */
+    disabled?: boolean
+    /** Optional tooltip / accessible explanation for disabled items. */
+    disabledReason?: string
 }
 
 export interface XShellBrand {

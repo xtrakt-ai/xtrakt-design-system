@@ -9,6 +9,12 @@ for the per-FE `XBreadcrumb.vue` mirror that landed in the design rollout.
 npm install @xtrakt-ai/design-tokens @xtrakt-ai/ui-vue
 ```
 
+Peer expectations:
+
+- `vue@^3.4.0`
+- `vue-router@^5.0.7`
+- `vue-toastification@^2.0.0-rc.5` (optional)
+
 ## Setup
 
 ```ts

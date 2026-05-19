@@ -29,12 +29,26 @@ Current published workspace versions in this repository:
 | Package | Version |
 |---|---:|
 | `@xtrakt-ai/design-tokens` | `2.3.0` |
-| `@xtrakt-ai/ui-vue` | `1.8.2` |
+| `@xtrakt-ai/ui-vue` | `1.8.3` |
 | `@xtrakt-ai/ui-angular` | `1.4.0` |
 
 The original operator bootstrap for `1.0.0` is complete. Ongoing package
 publishing is handled by the repo workflow and the per-package version
 bumps under `packages/*/package.json`.
+
+### Pending publish note
+
+`@xtrakt-ai/ui-vue@1.8.3` is the repository version that fixes the published
+peer metadata drift for `vue-router`. The currently installed `1.8.2` artifact
+on GitHub Packages still advertises `vue-router ^4.3.0`, while the repository
+source and consuming apps are already on `vue-router 5`.
+
+Release command for the fix:
+
+```bash
+git tag vui-vue@1.8.3
+git push --tags
+```
 
 ## Phase 2 — Per-FE adoption
 

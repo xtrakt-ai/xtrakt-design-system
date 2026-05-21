@@ -47,9 +47,9 @@ const X_SHELL_ICON_NAME_SET = new Set<string>(X_SHELL_ICON_NAMES)
  *
  * Usage:
  *   <x-shell
- *     [brand]="{ name: 'fluex Platform' }"
+ *     [brand]="{ name: 'cogneris Platform' }"
  *     [nav]="navItems"
- *     [user]="{ name: 'Admin', email: 'admin@fluex.ai' }"
+ *     [user]="{ name: 'Admin', email: 'admin@cogneris.ai' }"
  *     (logout)="onLogout()">
  *
  *     <ng-container shellBreadcrumb>

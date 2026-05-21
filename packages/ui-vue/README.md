@@ -101,7 +101,7 @@ MagicLinks, public tickets, and shared templates.
 
 ```vue
 <XPublicFlowShell
-  brand-name="fluex Sign"
+  brand-name="cogneris Sign"
   eyebrow="Signature request"
   title="Review and sign"
   status-label="Protected signature flow"

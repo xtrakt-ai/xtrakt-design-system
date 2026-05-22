@@ -32,7 +32,7 @@ export interface XShellUser {
 /**
  * Canonical xtrakt app shell — sidebar (collapsible) + topbar + content.
  *
- * Designed so every cogneris satellite (ECM, Sign, Template, Tickets, Portal)
+ * Designed so every Cogneris satellite (ECM, Sign, Template, Tickets, Portal)
  * gets the same chrome: 240px expanded sidebar / 64px collapsed, 56px
  * topbar with breadcrumb slot + user menu, content scrolls under.
  *
@@ -47,7 +47,7 @@ export interface XShellUser {
  * from the user-menu Logout label, which is overridable).
  *
  * Usage:
- *   <XShell :brand="{ name: 'cogneris ECM' }" :nav="navItems" :user="user" @logout="onLogout">
+ *   <XShell :brand="{ name: 'Cogneris ECM' }" :nav="navItems" :user="user" @logout="onLogout">
  *     <template #breadcrumb><XBreadcrumb /></template>
  *     <template #topbar-actions><button>...</button></template>
  *     <router-view />

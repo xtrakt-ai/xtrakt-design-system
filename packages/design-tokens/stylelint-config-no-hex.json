@@ -3,7 +3,7 @@
     "color-no-hex": [
       true,
       {
-        "message": "cogneris design system: use design tokens (var(--xt-*)) instead of raw hex colors. Allowed only inside the design-tokens package itself, where tokens are defined.",
+        "message": "Cogneris design system: use design tokens (var(--xt-*)) instead of raw hex colors. Allowed only inside the design-tokens package itself, where tokens are defined.",
         "severity": "error"
       }
     ]

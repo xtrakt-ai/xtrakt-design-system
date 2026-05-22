@@ -47,7 +47,7 @@ function onLogout() {
   <RouterView v-if="isPublic" />
   <XShell
     v-else
-    :brand="{ name: 'cogneris ECM' }"
+    :brand="{ name: 'Cogneris ECM' }"
     :nav="nav"
     :user="user"
     :logout-label="$t('menu.logout')"

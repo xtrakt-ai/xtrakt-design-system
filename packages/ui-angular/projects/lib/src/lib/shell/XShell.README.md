@@ -30,7 +30,7 @@ import { AuthService } from '../services/auth.service'
               XShellComponent, XBreadcrumbComponent],
     template: `
         <x-shell
-            [brand]="{ name: 'cogneris Platform' }"
+            [brand]="{ name: 'Cogneris Platform' }"
             [nav]="nav"
             [user]="{
                 name: auth.getUserNameFromToken(),

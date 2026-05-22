@@ -1,5 +1,5 @@
 /* ============================================================================
- * xtrakt — Design Tokens (canonical · "cogneris" brand)
+ * xtrakt — Design Tokens (canonical · "Cogneris" brand)
  *
  * Source of truth: the xtrakt-site marketing surface (xtrakt-site/src/styles.css).
  * Every FE inherits the same purple/cyan palette, the same Geist + Instrument
@@ -126,8 +126,8 @@
   /* ========================================================================
    * Backwards-compat aliases (--xt-* "Stripe-style" tokens)
    *
-   * These existed before the cogneris brand consolidation. They now resolve to
-   * the canonical cogneris values so legacy SCSS keeps rendering with the
+   * These existed before the Cogneris brand consolidation. They now resolve to
+   * the canonical Cogneris values so legacy SCSS keeps rendering with the
    * unified palette without a per-component rewrite.
    * ===================================================================== */
 
@@ -166,7 +166,7 @@
   --xt-warning-soft:  var(--color-warning-soft);
   /* Warm-amber banner palette (quota-exceeded redirect, plan-upgrade hero).
    * The semantic --color-warning / --xt-warning pair is the dark amber from
-   * cogneris; this group is the lighter banner-fill family that the upgrade
+   * Cogneris; this group is the lighter banner-fill family that the upgrade
    * screens use. Promoted from the platform-fe vendored mirror in 2.3.0 (D-03). */
   --xt-warning-bg:          #fff4e5;
   --xt-warning-border:      #ffb84d;

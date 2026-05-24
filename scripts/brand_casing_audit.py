@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
-"""Brand-casing audit — fail on lowercase "cogneris" in customer-facing prose.
+"""Brand-casing audit — flag prose drift and legacy-brand regressions.
 
-Per cogneris-brand-guidelines v1.3 § 9, the brand name in prose is title-case
-"Cogneris". Lowercase "cogneris" is reserved for the codename layer:
-  - File paths (cogneris-logo.png, cogneris-public DB tenant)
-  - URLs (https://cogneris.ai/...)
-  - Event names (cogneris:consent)
-  - Snake_case identifiers (cogneris_consent_v1)
-  - npm scope (@xtrakt-ai), repo names, GCP services
+Two checks run together:
 
-This script runs the regex `\\bcogneris\\b(?![\\-:\\/])(?!\\.\\w)` against any
-file passed as an argument (or against a sensible default tree when run
-without args) and exits non-zero if any prose-cogneris matches are found.
+1. **prose-cogneris** — lowercase "cogneris" used as prose. Per
+   cogneris-brand-guidelines v1.3 § 9, the brand name in prose is title-case
+   "Cogneris". Lowercase "cogneris" is reserved for the codename layer:
+     - File paths (cogneris-logo.png, cogneris-public DB tenant)
+     - URLs (https://cogneris.ai/...)
+     - Event names (cogneris:consent)
+     - Snake_case identifiers (cogneris_consent_v1)
+     - npm scope (@xtrakt-ai), repo names, GCP services
+
+2. **fluex-regression** — any occurrence of the legacy brand "fluex" (case
+   insensitive). The 2026-05-21 rebrand removed all customer-surface uses;
+   new occurrences are regressions. Historical references in audit/memory
+   docs are skipped via SKIP_FILENAMES.
 
 Intended for use in CI (per-repo .github/workflows/brand-casing-check.yml)
 and as a local pre-commit hygiene check.
 
 Exit codes:
-  0 — clean (no prose-cogneris found)
+  0 — clean (no drift found)
   1 — drift found (matches reported on stderr)
   2 — usage error
 """
@@ -35,6 +39,11 @@ from pathlib import Path
 # \b already handles trailing _ (underscore is a word char), so cogneris_public
 # does not match.
 PROSE_COGNERIS = re.compile(r"\bcogneris\b(?![\-:\/])(?!\.\w)")
+
+# Word-boundary "fluex" in any casing — legacy brand renamed to Cogneris
+# 2026-05-21. Any source-tree occurrence is a rebrand regression. Historical
+# audit/memory docs are exempt via SKIP_FILENAMES.
+FLUEX_REGRESSION = re.compile(r"\bfluex\b", re.IGNORECASE)
 
 # File extensions to scan when running in tree-walk mode (no explicit files).
 SCAN_EXTENSIONS = {
@@ -98,8 +107,8 @@ def should_scan(path: Path) -> bool:
     return path.suffix.lower() in SCAN_EXTENSIONS
 
 
-def scan_file(path: Path) -> list[tuple[int, str]]:
-    """Return [(line_no, line_content), ...] for matches in this file."""
+def scan_file(path: Path) -> list[tuple[int, str, str]]:
+    """Return [(line_no, kind, line_content), ...] for matches in this file."""
     try:
         text = path.read_text(encoding="utf-8", errors="replace")
     except OSError as e:
@@ -108,7 +117,9 @@ def scan_file(path: Path) -> list[tuple[int, str]]:
     hits = []
     for i, line in enumerate(text.splitlines(), start=1):
         if PROSE_COGNERIS.search(line):
-            hits.append((i, line.rstrip()))
+            hits.append((i, "prose-cogneris", line.rstrip()))
+        if FLUEX_REGRESSION.search(line):
+            hits.append((i, "fluex-regression", line.rstrip()))
     return hits
 
 
@@ -145,24 +156,28 @@ def main(argv: list[str]) -> int:
         else:
             print(f"warn: {t} does not exist", file=sys.stderr)
 
-    drift: list[tuple[Path, int, str]] = []
+    drift: list[tuple[Path, int, str, str]] = []
     for f in files:
-        for line_no, line in scan_file(f):
-            drift.append((f, line_no, line))
+        for line_no, kind, line in scan_file(f):
+            drift.append((f, line_no, kind, line))
 
     if not drift:
-        print(f"OK: scanned {len(files)} files, no prose-cogneris drift.")
+        print(f"OK: scanned {len(files)} files, no brand drift.")
         return 0
 
+    prose_count = sum(1 for d in drift if d[2] == "prose-cogneris")
+    fluex_count = sum(1 for d in drift if d[2] == "fluex-regression")
     print(
-        f"DRIFT: {len(drift)} prose-cogneris occurrences across "
-        f"{len({d[0] for d in drift})} files. "
-        "Expected title-case 'Cogneris' per brand-guidelines v1.3 § 9.",
+        f"DRIFT: {len(drift)} occurrence(s) across "
+        f"{len({d[0] for d in drift})} file(s) — "
+        f"{prose_count} prose-cogneris, {fluex_count} fluex-regression. "
+        "Expected title-case 'Cogneris' per brand-guidelines v1.3 § 9; "
+        "no 'fluex' in source (legacy brand, renamed 2026-05-21).",
         file=sys.stderr,
     )
-    for f, line_no, line in drift[: args.max_show]:
+    for f, line_no, kind, line in drift[: args.max_show]:
         snippet = line.strip()[:140]
-        print(f"  {f}:{line_no}: {snippet}", file=sys.stderr)
+        print(f"  [{kind}] {f}:{line_no}: {snippet}", file=sys.stderr)
     if len(drift) > args.max_show:
         print(
             f"  ... and {len(drift) - args.max_show} more "

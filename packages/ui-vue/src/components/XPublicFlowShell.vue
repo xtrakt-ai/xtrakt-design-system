@@ -29,7 +29,7 @@ withDefaults(
     securityItems?: XPublicFlowSecurityItem[]
   }>(),
   {
-    brandName: 'xtrakt',
+    brandName: 'Cogneris',
     eyebrow: '',
     subtitle: '',
     statusLabel: 'Protected link',

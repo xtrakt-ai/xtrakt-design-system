@@ -69,6 +69,8 @@ SKIP_DIR_FRAGMENTS = (
     "/.angular/",
     "/.cache/",
     "/audits/",   # historical SEO / brand audits — frozen snapshots
+    "/.playwright-mcp/",  # generated Playwright MCP browser traces/snapshots
+    "/walkthroughs/",     # generated menu-walkthrough JSON dumps
 )
 
 # Filenames to skip — test fixtures, archives, and meta-documentation that
@@ -84,6 +86,8 @@ SKIP_FILENAMES = (
     "project_brand_fluex_unification.md",             # auto-memory history
     "CLAUDE.md",                                       # agent-instruction doc (quotes the rule)
     "AGENTS.md",                                       # codex-instruction doc (quotes the rule)
+    "branding.md",                                     # rule-definition doc (quotes the lowercase form)
+    "brand-casing-check.yml",                          # this guard's own CI workflow (names what it catches)
 )
 
 # Substring patterns in basenames to skip — planning docs and session recaps
@@ -92,6 +96,7 @@ SKIP_FILENAME_FRAGMENTS = (
     "-implementation-plan",
     "-session-recap",
     "-migration-plan",
+    "menu-walkthrough-results",  # generated menu-walkthrough JSON dumps
 )
 
 

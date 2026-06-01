@@ -25,9 +25,9 @@
     "build": "echo 'ui-angular ships source — no build step'"
   },
   "peerDependencies": {
-    "@angular/common": "^21.0.0",
-    "@angular/core": "^21.0.0",
-    "@angular/router": "^21.0.0",
+    "@angular/common": "^21.2.15",
+    "@angular/core": "^21.2.15",
+    "@angular/router": "^21.2.15",
     "@xtrakt-ai/design-tokens": "^2.0.0"
   },
   "repository": {

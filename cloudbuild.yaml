@@ -19,6 +19,15 @@ availableSecrets:
 # previous CI: it tolerates a stale/absent lockfile and still resolves the
 # @xtrakt-ai/design-tokens peer dep (needs auth even for read).
 steps:
+  # XTRAK-131 — compatibility-alias boundary guard. Zero-dependency, so it
+  # runs before install/auth: a legacy alias leaking into packages/* outside
+  # the approved sources (see packages/design-tokens/D-04_COMPAT_ALIAS_BOUNDARY.md)
+  # must fail the build before anything is published.
+  - id: lint-tokens-legacy
+    name: ${_NODE_IMAGE}
+    entrypoint: node
+    args: [scripts/check-legacy-token-usage.mjs]
+
   - id: write-npmrc
     name: gcr.io/cloud-builders/gcloud
     entrypoint: bash

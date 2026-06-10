@@ -21,6 +21,12 @@ large visual rewrite.
 
 ## Guardrails
 
+The compatibility-alias boundary — which files may define or write the
+legacy aliases, and how that boundary is enforced — is documented in
+[`D-04_COMPAT_ALIAS_BOUNDARY.md`](./D-04_COMPAT_ALIAS_BOUNDARY.md). That
+document is the policy of record; extending any allowlist requires
+updating it in the same PR.
+
 This package ships `stylelint-config-no-legacy-tokens.json` to block new direct
 uses of compatibility aliases in app styles. Consumers can extend it from their
 own Stylelint config after importing `@xtrakt-ai/design-tokens`.

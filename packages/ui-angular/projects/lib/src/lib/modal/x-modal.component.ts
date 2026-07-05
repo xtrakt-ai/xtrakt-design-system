@@ -3,6 +3,11 @@ import { Component, ElementRef, effect, input, model, output, viewChild } from '
 
 let modalSeq = 0
 
+function nextModalId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return `xt-modal-title-${crypto.randomUUID()}`
+  return `xt-modal-title-${++modalSeq}`
+}
+
 /**
  * Canonical xtrakt modal dialog (Angular). Built on the native <dialog>
  * element, so focus-trap, focus restore, aria-modal, Esc-to-close and
@@ -17,6 +22,10 @@ let modalSeq = 0
  * `open` is two-way. On user dismiss (Esc / overlay-click / ×) the native
  * `close` event fires: the component emits (closed) and sets open=false.
  * Programmatic close (consumer sets open=false) does NOT emit (closed).
+ *
+ * For a one-way `[open]` binding, the consumer MUST reset its source state in
+ * `(closed)` (as device-intelligence does with `selectedDevice`), so the bound
+ * expression genuinely goes false; otherwise state can desync.
  */
 @Component({
   selector: 'x-modal',
@@ -76,8 +85,7 @@ let modalSeq = 0
       font-size: 1.5rem; line-height: 1; padding: 0 0.25rem;
       color: var(--text-muted, #6b7280);
     }
-    .xt-modal__footer { margin-top: 1.25rem; display: flex; gap: 0.5rem; justify-content: flex-end; }
-    .xt-modal__footer:empty { display: none; }
+    .xt-modal__footer:has(*) { margin-top: 1.25rem; display: flex; gap: 0.5rem; justify-content: flex-end; }
     @media (prefers-reduced-motion: no-preference) {
       dialog.xt-modal[open] { animation: xt-modal-in 150ms ease-out; }
       @keyframes xt-modal-in {
@@ -94,7 +102,7 @@ export class XModalComponent {
   readonly dismissable = input<boolean>(true)
   readonly closed = output<void>()
 
-  readonly titleId = `xt-modal-title-${++modalSeq}`
+  readonly titleId = nextModalId()
 
   private readonly dlg = viewChild<ElementRef<HTMLDialogElement>>('dlg')
   private programmaticClose = false
@@ -128,6 +136,7 @@ export class XModalComponent {
   }
 
   dismiss(): void {
-    if (this.dismissable()) this.dlg()?.nativeElement.close()
+    const el = this.dlg()?.nativeElement
+    if (this.dismissable() && el?.open) el.close()
   }
 }

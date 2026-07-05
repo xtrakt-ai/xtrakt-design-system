@@ -61,6 +61,10 @@ function nextModalId(): string {
       background: transparent;
       color: inherit;
       width: min(560px, calc(100vw - 2rem));
+      /* Restore the native dialog:modal centering that a consumer global
+         "* margin:0" reset would otherwise defeat: dialog:modal is
+         position:fixed with inset:0, so margin:auto centres it in the viewport. */
+      margin: auto;
     }
     dialog.xt-modal--sm { width: min(380px, calc(100vw - 2rem)); }
     dialog.xt-modal--md { width: min(560px, calc(100vw - 2rem)); }
